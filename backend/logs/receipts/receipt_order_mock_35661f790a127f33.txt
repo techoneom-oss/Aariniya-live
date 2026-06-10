@@ -1,0 +1,21 @@
+==================================================
+                 AARINIYA RECEIPT
+==================================================
+Order ID:        order_mock_35661f790a127f33
+Payment ID:      pay_mock_z0trq99py
+Date:            2026-06-09 09:03:42
+Payment Status:  PAID
+--------------------------------------------------
+Customer Details:
+Name:            Regular User
+Email:           user@aariniya.com
+Phone:           6845
+Address:         sfsd, dsfdsf, dass, sfsf - 752101, India
+--------------------------------------------------
+Purchased Items:
+- AARINIYA Deep Forest Multifloral Honey [Physical] x1 @ INR 1199.00 = INR 1199.00
+--------------------------------------------------
+Total Amount:    INR 1199.00
+==================================================
+          Thank you for choosing Aariniya!
+==================================================

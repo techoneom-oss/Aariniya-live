@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Aariniya - Order Receipt</title>
+  <style>
+    body { font-family: Arial, sans-serif; color: #333; line-height: 1.6; padding: 20px; }
+    .receipt-container { max-width: 600px; margin: 0 auto; border: 1px solid #eee; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.05); }
+    h1 { color: #2e5a44; text-align: center; margin-bottom: 20px; }
+    .details-table, .items-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+    .details-table td { padding: 6px 0; }
+    .details-table td.label { font-weight: bold; width: 120px; }
+    .items-table th { background-color: #f8f8f8; font-weight: bold; border: 1px solid #ddd; padding: 8px; text-align: left; }
+    .total-section { text-align: right; font-size: 1.2em; font-weight: bold; margin-top: 20px; color: #2e5a44; }
+    .footer { text-align: center; margin-top: 30px; font-size: 0.9em; color: #777; }
+  </style>
+</head>
+<body>
+  <div class="receipt-container">
+    <h1>Aariniya Wellness</h1>
+    <hr style="border: 0; border-top: 1px solid #eee; margin-bottom: 20px;">
+    
+    <table class="details-table">
+      <tr><td class="label">Order ID:</td><td>order_mock_004ddf2372948d3b</td></tr>
+      <tr><td class="label">Payment ID:</td><td>pay_mock_1780984533678</td></tr>
+      <tr><td class="label">Date:</td><td>2026-06-09 05:55:33</td></tr>
+      <tr><td class="label">Status:</td><td><span style="color: green; font-weight: bold;">PAID</span></td></tr>
+    </table>
+    
+    <h3 style="color: #2e5a44; border-bottom: 1px solid #eee; padding-bottom: 5px;">Customer Info</h3>
+    <table class="details-table">
+      <tr><td class="label">Name:</td><td>Regular User</td></tr>
+      <tr><td class="label">Email:</td><td>user@aariniya.com</td></tr>
+      <tr><td class="label">Phone:</td><td>9876543210</td></tr>
+      <tr><td class="label">Address:</td><td>123 Green Lane, Near Woods, Bangalore, Karnataka - 560001, India</td></tr>
+    </table>
+    
+    <h3 style="color: #2e5a44; border-bottom: 1px solid #eee; padding-bottom: 5px;">Items</h3>
+    <table class="items-table">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Type</th>
+          <th style="text-align: center;">Qty</th>
+          <th style="text-align: right;">Unit Price</th>
+          <th style="text-align: right;">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+          <tr>
+            <td style="border: 1px solid #ddd; padding: 8px;">AARINIYA Deep Forest Multifloral Honey</td>
+            <td style="border: 1px solid #ddd; padding: 8px;">Physical</td>
+            <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">2</td>
+            <td style="border: 1px solid #ddd; padding: 8px; text-align: right;">INR 1199.00</td>
+            <td style="border: 1px solid #ddd; padding: 8px; text-align: right;">INR 2398.00</td>
+          </tr>
+        
+          <tr>
+            <td style="border: 1px solid #ddd; padding: 8px;">Forest Morning Yoga Flow</td>
+            <td style="border: 1px solid #ddd; padding: 8px;">Course</td>
+            <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">1</td>
+            <td style="border: 1px solid #ddd; padding: 8px; text-align: right;">INR 1999.00</td>
+            <td style="border: 1px solid #ddd; padding: 8px; text-align: right;">INR 1999.00</td>
+          </tr>
+        
+      </tbody>
+    </table>
+    
+    <div class="total-section">
+      Total Paid: INR 4397.00
+    </div>
+    
+    <div class="footer">
+      Thank you for shopping with us! <br>
+      For queries, support, or feedback, email us at support@aariniya.com
+    </div>
+  </div>
+</body>
+</html>

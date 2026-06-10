@@ -1,0 +1,22 @@
+==================================================
+                 AARINIYA RECEIPT
+==================================================
+Order ID:        order_mock_0ee0e1a141d224eb
+Payment ID:      pay_mock_1780984291840
+Date:            2026-06-09 05:51:31
+Payment Status:  PAID
+--------------------------------------------------
+Customer Details:
+Name:            Regular User
+Email:           user@aariniya.com
+Phone:           9876543210
+Address:         123 Green Lane, Near Woods, Bangalore, Karnataka - 560001, India
+--------------------------------------------------
+Purchased Items:
+- AARINIYA Deep Forest Multifloral Honey [Physical] x2 @ INR 1199.00 = INR 2398.00
+- Forest Morning Yoga Flow [Course] x1 @ INR 1999.00 = INR 1999.00
+--------------------------------------------------
+Total Amount:    INR 4397.00
+==================================================
+          Thank you for choosing Aariniya!
+==================================================

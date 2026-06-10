@@ -1,0 +1,8 @@
+{
+  "name": "aariniya-root",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "test:integration": "npm run test:integration --prefix backend"
+  }
+}
