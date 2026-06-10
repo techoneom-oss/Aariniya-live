@@ -19,11 +19,14 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const JWT_SECRET = process.env.JWT_SECRET || 'aariniya_secret_key_987654321';
 
+const RAZORPAY_KEY_ID = process.env.RAZORPAY_KEY_ID || 'rzp_test_mockKeyId123';
+const RAZORPAY_KEY_SECRET = process.env.RAZORPAY_KEY_SECRET || 'mockKeySecret123456789';
+
 // Setup Razorpay instance
 // In standard test mode, you can use these fallback test credentials if environment variables aren't provided.
 const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID || 'rzp_test_mockKeyId123',
-  key_secret: process.env.RAZORPAY_KEY_SECRET || 'mockKeySecret123456789'
+  key_id: RAZORPAY_KEY_ID,
+  key_secret: RAZORPAY_KEY_SECRET
 });
 
 app.use(cors());
@@ -349,7 +352,7 @@ app.post('/api/orders/create', authenticateToken, async (req, res) => {
 
   // Check if Razorpay keys are default mock values. 
   // If keys are mock, we create a mock order_id to bypass Razorpay connection errors for testing.
-  if (razorpay.key_id === 'rzp_test_mockKeyId123') {
+  if (RAZORPAY_KEY_ID === 'rzp_test_mockKeyId123') {
     const mockOrderId = `order_mock_${crypto.randomBytes(8).toString('hex')}`;
     
     // Save order in database with pending status
@@ -391,7 +394,7 @@ app.post('/api/orders/create', authenticateToken, async (req, res) => {
           id: razorpayOrder.id,
           amount: razorpayOrder.amount,
           currency: razorpayOrder.currency,
-          key: razorpay.key_id,
+          key: RAZORPAY_KEY_ID,
           isMock: false
         });
       });
@@ -445,7 +448,7 @@ app.post('/api/orders/verify', (req, res) => {
       // Real Razorpay signature verification
       const text = razorpay_order_id + "|" + razorpay_payment_id;
       const generated_signature = crypto
-        .createHmac("sha256", razorpay.key_secret)
+        .createHmac("sha256", RAZORPAY_KEY_SECRET)
         .update(text)
         .digest("hex");
 
