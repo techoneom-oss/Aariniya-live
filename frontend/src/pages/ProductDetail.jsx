@@ -171,25 +171,25 @@ export default function ProductDetail({ onAddToCart }) {
   return (
     <div className="container" style={styles.container}>
       {/* Product Detail Top Section */}
-      <div style={styles.mainGrid}>
+      <div className="product-main-grid" style={styles.mainGrid}>
         {/* Left Column: Image Gallery */}
-        <div style={styles.galleryWrapper}>
-          <div style={styles.mainImageContainer}>
-            <img src={activeImage} alt={product.name} style={styles.mainImage} />
-          </div>
-          <div style={styles.thumbnails}>
+        <div className="product-gallery-container">
+          <div className="product-thumbnails">
             {displayImages.map((img, idx) => (
               <button 
                 key={idx} 
                 onClick={() => setActiveImage(img)}
+                className="product-thumbnail-btn"
                 style={{
-                  ...styles.thumbnailBtn,
                   border: activeImage === img ? '2px solid var(--color-accent)' : '1px solid rgba(28, 53, 45, 0.08)'
                 }}
               >
-                <img src={img} alt={`Detail ${idx + 1}`} style={styles.thumbnailImg} />
+                <img className="product-thumbnail-img" src={img} alt={`Detail ${idx + 1}`} />
               </button>
             ))}
+          </div>
+          <div className="product-main-image-container">
+            <img className="product-main-image" src={activeImage} alt={product.name} />
           </div>
         </div>
 
@@ -402,11 +402,11 @@ export default function ProductDetail({ onAddToCart }) {
       </div>
 
       {/* Customer Reviews Section */}
-      <section id="reviews-section" style={styles.reviewsWrapper}>
+      <section id="reviews-section" className="product-reviews-wrapper" style={styles.reviewsWrapper}>
         <h2 style={styles.reviewsTitle}>Customer Reviews</h2>
         
         {/* Three Column Summary Box */}
-        <div style={styles.summaryBox}>
+        <div className="product-summary-box" style={styles.summaryBox}>
           {/* Column 1: Average */}
           <div style={styles.summaryColLeft}>
             <div style={styles.summaryStars}>
@@ -419,7 +419,7 @@ export default function ProductDetail({ onAddToCart }) {
           </div>
 
           {/* Column 2: Progress Bars (with borders) */}
-          <div style={styles.summaryColMiddle}>
+          <div className="product-summary-col-middle" style={styles.summaryColMiddle}>
             <div style={styles.progressList}>
               {[5, 4, 3, 2, 1].map((stars) => {
                 const count = starsBreakdown[stars] || 0;
@@ -634,9 +634,6 @@ const styles = {
     marginTop: '1rem',
   },
   thumbnailBtn: {
-    width: 'calc(12.5% - 0.66rem)', // Fits 8 per row on desktop
-    minWidth: '70px',
-    height: '75px',
     borderRadius: 'var(--radius-md)',
     cursor: 'pointer',
     padding: '0',
@@ -651,7 +648,7 @@ const styles = {
   thumbnailImg: {
     width: '100%',
     height: '100%',
-    objectFit: 'cover',
+    objectFit: 'contain',
     objectPosition: 'center',
     borderRadius: 'var(--radius-md)',
     display: 'block',
@@ -1116,57 +1113,3 @@ const styles = {
     fontWeight: '500',
   }
 };
-
-// Add responsive style injections
-if (typeof document !== 'undefined') {
-  const style = document.createElement('style');
-  style.innerHTML += `
-    @keyframes pulse {
-      0% { opacity: 0.4; }
-      50% { opacity: 1; }
-      100% { opacity: 0.4; }
-    }
-    @media (max-width: 991px) {
-      .container [style*="mainGrid"], .container [style*="reviewsGrid"] {
-        grid-template-columns: 1fr !important;
-        gap: 3rem !important;
-      }
-      [style*="mainImageContainer"] {
-        height: 500px !important;
-      }
-      [style*="summaryBox"] {
-        grid-template-columns: 1fr !important;
-        gap: 2rem !important;
-        text-align: center !important;
-      }
-      [style*="summaryColMiddle"] {
-        border-left: none !important;
-        border-right: none !important;
-        border-top: 1px solid rgba(28, 53, 45, 0.08) !important;
-        border-bottom: 1px solid rgba(28, 53, 45, 0.08) !important;
-        padding: 1.5rem 0 !important;
-      }
-      .review-form-row {
-        flex-direction: column !important;
-        gap: 1rem !important;
-      }
-      .review-form-row > div {
-        width: 100% !important;
-      }
-    }
-    @media (max-width: 768px) {
-      [style*="thumbnailBtn"] {
-        width: calc(20% - 0.6rem) !important;
-      }
-    }
-    @media (max-width: 576px) {
-      [style*="mainImageContainer"] {
-        height: 420px !important;
-      }
-      [style*="thumbnailBtn"] {
-        width: calc(25% - 0.57rem) !important;
-      }
-    }
-  `;
-  document.head.appendChild(style);
-}

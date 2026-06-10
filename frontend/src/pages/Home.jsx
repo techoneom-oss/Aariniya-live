@@ -13,7 +13,7 @@ export default function Home({ setActivePage }) {
         <div style={styles.heroOverlay}></div>
         <div className="container" style={styles.heroContent}>
           <span style={styles.heroKicker}>Nature's Sweetest Ritual</span>
-          <h1 style={styles.heroTitle}>A Wellness Brand inspired by the forests of Northeast India</h1>
+          <h1 className="home-hero-title" style={styles.heroTitle}>A Wellness Brand inspired by the forests of Northeast India</h1>
           <p style={styles.heroText}>
             Built on the belief that nature already provides what modern life often lacks — simplicity, balance, and nourishment.
           </p>
@@ -31,8 +31,8 @@ export default function Home({ setActivePage }) {
 
       {/* Flagship Product Teaser Section */}
       <section style={styles.teaserSection}>
-        <div className="container" style={styles.teaserGrid}>
-          <div style={styles.teaserImageContainer}>
+        <div className="container home-teaser-grid responsive-grid-2" style={styles.teaserGrid}>
+          <div className="home-teaser-image-container" style={styles.teaserImageContainer}>
             <img 
               src="/assets/product_jar_forest.jpg" 
               alt="Aariniya Deep Forest Honey Jar" 
@@ -67,7 +67,7 @@ export default function Home({ setActivePage }) {
             <p style={styles.sectionSub}>Wellness is not a destination. It is a slow, daily ritual.</p>
           </div>
 
-          <div style={styles.ritualsGrid}>
+          <div className="home-rituals-grid responsive-grid-4" style={styles.ritualsGrid}>
             <div style={styles.ritualCard}>
               <div style={styles.ritualNum}>01</div>
               <h3 style={styles.ritualTitle}>Wake Up With Intention</h3>
@@ -94,7 +94,7 @@ export default function Home({ setActivePage }) {
 
       {/* Founder Profile Teaser */}
       <section style={styles.founderSection}>
-        <div className="container" style={styles.founderGrid}>
+        <div className="container home-founder-grid responsive-grid-2" style={styles.founderGrid}>
           <div style={styles.founderContent}>
             <span style={styles.teaserKicker}>Behind the Brand</span>
             <h2 style={styles.teaserTitle}>Meet Aarini Devrani</h2>
@@ -109,7 +109,7 @@ export default function Home({ setActivePage }) {
             </button>
           </div>
           <div style={styles.founderImages}>
-            <div style={styles.founderImageFrame}>
+            <div className="home-founder-image-frame" style={styles.founderImageFrame}>
               <img 
                 src="/assets/product_gallery_new_3.jpg" 
                 alt="Aarini Devrani morning wellness ritual" 
@@ -389,30 +389,3 @@ const styles = {
   }
 };
 
-// Add styles injection for home page responsive breakpoints
-if (typeof document !== 'undefined') {
-  const style = document.createElement('style');
-  style.innerHTML += `
-    @media (max-width: 991px) {
-      header [style*="heroTitle"] {
-        font-size: 2.6rem !important;
-      }
-      [style*="teaserGrid"], [style*="founderGrid"] {
-        grid-template-columns: 1fr !important;
-        gap: 3rem !important;
-      }
-      [style*="ritualsGrid"] {
-        grid-template-columns: 1fr 1fr !important;
-      }
-    }
-    @media (max-width: 576px) {
-      [style*="ritualsGrid"] {
-        grid-template-columns: 1fr !important;
-      }
-      header [style*="heroTitle"] {
-        font-size: 2.2rem !important;
-      }
-    }
-  `;
-  document.head.appendChild(style);
-}

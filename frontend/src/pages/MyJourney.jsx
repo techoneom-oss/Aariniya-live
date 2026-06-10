@@ -28,10 +28,10 @@ export default function MyJourney() {
 
       {/* Chapter 1 */}
       <section style={styles.section}>
-        <div className="container" style={styles.grid}>
+        <div className="container journey-grid responsive-grid-2" style={styles.grid}>
           <div style={styles.textCol}>
             <div style={styles.chapterNum}>Chapter I</div>
-            <h2 style={styles.chapterTitle}>A Childhood in the Canopy</h2>
+            <h2 className="journey-chapter-title" style={styles.chapterTitle}>A Childhood in the Canopy</h2>
             <p style={styles.p}>
               Growing up in the foothills of Northeast India, my backyard wasn’t a manicured lawn; it was a dense, living forest. I was raised in a world where the morning alarm was the call of wild hornbills, and the air carried the scent of wet pine, orchids, and wild ginger. My grandfather, a local elder who knew the language of the mountains, taught me early on that the forest is not something we visit—it is something we belong to.
             </p>
@@ -40,7 +40,7 @@ export default function MyJourney() {
             </p>
           </div>
           <div style={styles.imageCol}>
-            <div style={styles.imageBox}>
+            <div className="journey-image-box" style={styles.imageBox}>
               <img 
                 src="/assets/product_gallery_new_1.jpg" 
                 alt="Aarini Devrani in Forest" 
@@ -54,7 +54,7 @@ export default function MyJourney() {
       {/* Quote Breakout */}
       <section style={styles.pullQuoteSection}>
         <div className="container" style={styles.pullQuoteContainer}>
-          <p style={styles.pullQuoteText}>
+          <p className="journey-pull-quote-text" style={styles.pullQuoteText}>
             "We had traded the slow, nourishing rhythms of nature for convenience and shortcuts. Aariniya began as a personal quest to reconnect with purity."
           </p>
         </div>
@@ -62,10 +62,10 @@ export default function MyJourney() {
 
       {/* Chapter 2 & 3 */}
       <section style={{...styles.section, backgroundColor: '#ffffff'}}>
-        <div className="container" style={styles.gridReversed}>
+        <div className="container journey-grid responsive-grid-2" style={styles.gridReversed}>
           <div style={styles.textCol}>
             <div style={styles.chapterNum}>Chapter II & III</div>
-            <h2 style={styles.chapterTitle}>The Modern Disconnect & Returning to the Source</h2>
+            <h2 className="journey-chapter-title" style={styles.chapterTitle}>The Modern Disconnect & Returning to the Source</h2>
             <p style={styles.p}>
               When I left the forests to pursue my education and career in the city, I felt an immediate and deep disconnect. The air was heavy, life was rushed, and "wellness" was sold in plastic bottles, packed with artificial ingredients and high-pressure marketing. My energy levels plummeted, my skin lost its glow, and my mind was constantly cluttered.
             </p>
@@ -77,7 +77,7 @@ export default function MyJourney() {
             </p>
           </div>
           <div style={styles.imageCol}>
-            <div style={styles.imageBox}>
+            <div className="journey-image-box" style={styles.imageBox}>
               <img 
                 src="/assets/product_gallery_new_2.jpg" 
                 alt="Authentic Wellness" 
@@ -93,43 +93,43 @@ export default function MyJourney() {
         <div className="container">
           <h2 style={styles.journalTitle}>Forest Visual Journal</h2>
           <p style={styles.journalSub}>Glimpses of Northeast India's pristine ecosystems, harvesting traditions, and ceremonies.</p>
-          <div style={styles.journalGrid}>
-            <div className="journal-card" style={styles.journalCard}>
+          <div className="journey-journal-grid" style={styles.journalGrid}>
+            <div className="journal-card journey-journal-card" style={styles.journalCard}>
               <img src="/assets/aarini_devrani_5.jpg" alt="Aarini Devrani Ceremonial Attire" style={styles.journalImg} />
               <div style={styles.journalCardOverlay}>
                 <span style={styles.journalCardKicker}>Ceremony</span>
                 <h4 style={styles.journalCardTitle}>Traditional Northeast Ceremonial Attire</h4>
               </div>
             </div>
-            <div className="journal-card" style={styles.journalCard}>
+            <div className="journal-card journey-journal-card" style={styles.journalCard}>
               <img src="/assets/aarini_devrani_1.jpg" alt="Aarini Devrani Packing Honey" style={styles.journalImg} />
               <div style={styles.journalCardOverlay}>
                 <span style={styles.journalCardKicker}>Process</span>
                 <h4 style={styles.journalCardTitle}>Small Batch Quality Control</h4>
               </div>
             </div>
-            <div className="journal-card" style={styles.journalCard}>
+            <div className="journal-card journey-journal-card" style={styles.journalCard}>
               <img src="/assets/aarini_devrani_2.jpg" alt="Aarini Devrani in Nature" style={styles.journalImg} />
               <div style={styles.journalCardOverlay}>
                 <span style={styles.journalCardKicker}>Connection</span>
                 <h4 style={styles.journalCardTitle}>Daily Forest Ritual Walk</h4>
               </div>
             </div>
-            <div className="journal-card" style={styles.journalCard}>
+            <div className="journal-card journey-journal-card" style={styles.journalCard}>
               <img src="/assets/aarini_devrani_3.jpg" alt="Aarini Devrani Forest Story" style={styles.journalImg} />
               <div style={styles.journalCardOverlay}>
                 <span style={styles.journalCardKicker}>Roots</span>
                 <h4 style={styles.journalCardTitle}>A Childhood in the Foothills</h4>
               </div>
             </div>
-            <div className="journal-card" style={styles.journalCard}>
+            <div className="journal-card journey-journal-card" style={styles.journalCard}>
               <img src="/assets/aarini_devrani_4.jpg" alt="Aarini Devrani Authentic Wellness" style={styles.journalImg} />
               <div style={styles.journalCardOverlay}>
                 <span style={styles.journalCardKicker}>Philosophy</span>
                 <h4 style={styles.journalCardTitle}>Mindful Wellness Lifestyle</h4>
               </div>
             </div>
-            <div className="journal-card" style={styles.journalCard}>
+            <div className="journal-card journey-journal-card" style={styles.journalCard}>
               <img src="/assets/product_gallery_new_4.jpg" alt="Beekeeping Harvest" style={styles.journalImg} />
               <div style={styles.journalCardOverlay}>
                 <span style={styles.journalCardKicker}>Harvest</span>
@@ -144,7 +144,7 @@ export default function MyJourney() {
       <section style={styles.valuesSection}>
         <div className="container">
           <h2 style={styles.valuesTitle}>Our Core Forest Pillars</h2>
-          <div style={styles.valuesGrid}>
+          <div className="journey-values-grid responsive-grid-3" style={styles.valuesGrid}>
             <div style={styles.valueCard}>
               <Trees size={32} color="var(--color-accent)" style={{ marginBottom: '1rem' }} />
               <h3 style={styles.valueName}>Nature First</h3>
@@ -393,44 +393,3 @@ const styles = {
   }
 };
 
-// Inject responsive rules
-if (typeof document !== 'undefined') {
-  const style = document.createElement('style');
-  style.innerHTML += `
-    @media (max-width: 900px) {
-      [style*="chapterTitle"] {
-        font-size: 1.75rem !important;
-      }
-      [style*="pullQuoteText"] {
-        font-size: 1.4rem !important;
-      }
-      .container [style*="grid"], .container [style*="gridReversed"] {
-        grid-template-columns: 1fr !important;
-        gap: 3rem !important;
-      }
-      .container [style*="valuesGrid"] {
-        grid-template-columns: 1fr !important;
-        gap: 2rem !important;
-      }
-      [style*="imageBox"] {
-        height: 380px !important;
-      }
-      .container [style*="journalGrid"] {
-        grid-template-columns: 1fr 1fr !important;
-        gap: 2rem !important;
-      }
-      [style*="journalCard"] {
-        height: 350px !important;
-      }
-    }
-    @media (max-width: 600px) {
-      .container [style*="journalGrid"] {
-        grid-template-columns: 1fr !important;
-      }
-    }
-    .journal-card:hover img {
-      transform: scale(1.05);
-    }
-  `;
-  document.head.appendChild(style);
-}

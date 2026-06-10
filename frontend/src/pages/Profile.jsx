@@ -138,7 +138,7 @@ export default function Profile({ user, setGlobalUser, setActivePage }) {
         </button>
       </div>
 
-      <div style={styles.grid}>
+      <div className="profile-grid">
         {/* Left Column: Contact and Address Settings */}
         <div style={styles.settingsCard}>
           <div style={styles.cardHeader}>
@@ -477,16 +477,4 @@ const styles = {
   }
 };
 
-// Add responsive stylesheet injections
-if (typeof document !== 'undefined') {
-  const style = document.createElement('style');
-  style.innerHTML += `
-    @media (max-width: 900px) {
-      .container [style*="grid"] {
-        grid-template-columns: 1fr !important;
-        gap: 2rem !important;
-      }
-    }
-  `;
-  document.head.appendChild(style);
-}
+

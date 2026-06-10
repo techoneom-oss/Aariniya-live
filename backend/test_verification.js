@@ -189,7 +189,7 @@ async function runTests() {
   // Create Order (Mock Checkout)
   console.log("Creating checkout order...");
   const testItems = [
-    { id: 1, name: "AARINIYA Deep Forest Multifloral Honey", price: 1199, qty: 2, isCourse: false },
+    { id: 1, name: "AARINIYA Deep Forest Multifloral Honey", price: 1970, qty: 2, isCourse: false },
     { id: 1, name: "Forest Morning Yoga Flow", price: 1999, qty: 1, isCourse: true }
   ];
   const testAddress = {
@@ -208,7 +208,7 @@ async function runTests() {
       'Authorization': `Bearer ${userToken}` 
     },
     body: JSON.stringify({
-      amount: 4397,
+      amount: 5939,
       currency: "INR",
       customer_name: "Regular User",
       email: "user@aariniya.com",
@@ -369,15 +369,15 @@ async function runTests() {
       'Authorization': `Bearer ${userToken}`
     },
     body: JSON.stringify({
-      amount: 5595, // 3 * 1199 + 1999
+      amount: 7909, // 3 * 1970 + 1999
       currency: "INR",
       customer_name: "Regular User",
       email: "user@aariniya.com",
       phone: "9876543210",
       address: testAddress,
       items: [
-        { id: 1, name: "AARINIYA Deep Forest Multifloral Honey", price: 1199, qty: 3, isCourse: false },
-        { id: 2, name: "Forest Morning Yoga Flow", price: 1999, qty: 1, isCourse: true }
+        { id: 1, name: "AARINIYA Deep Forest Multifloral Honey", price: 1970, qty: 3, isCourse: false },
+        { id: 1, name: "Forest Morning Yoga Flow", price: 1999, qty: 1, isCourse: true }
       ]
     })
   });
