@@ -1129,15 +1129,21 @@ if (typeof document !== 'undefined') {
     @media (max-width: 991px) {
       .container [style*="mainGrid"], .container [style*="reviewsGrid"] {
         grid-template-columns: 1fr !important;
-        gap: 3rem !important;
+        gap: 1.75rem !important;
       }
       [style*="mainImageContainer"] {
-        height: 500px !important;
+        height: 450px !important;
+      }
+      [style*="reviewsWrapper"] {
+        margin-top: 3rem !important;
+        padding-top: 2rem !important;
       }
       [style*="summaryBox"] {
         grid-template-columns: 1fr !important;
-        gap: 2rem !important;
+        gap: 1.5rem !important;
         text-align: center !important;
+        padding: 1.5rem 0 !important;
+        margin-bottom: 1.5rem !important;
       }
       [style*="summaryColMiddle"] {
         border-left: none !important;
@@ -1157,14 +1163,21 @@ if (typeof document !== 'undefined') {
     @media (max-width: 768px) {
       [style*="thumbnailBtn"] {
         width: calc(20% - 0.6rem) !important;
+        min-width: 0 !important;
+        height: 60px !important;
       }
     }
     @media (max-width: 576px) {
       [style*="mainImageContainer"] {
-        height: 420px !important;
+        height: 320px !important;
       }
       [style*="thumbnailBtn"] {
         width: calc(25% - 0.57rem) !important;
+        min-width: 0 !important;
+        height: 55px !important;
+      }
+      .container [style*="mainGrid"] {
+        gap: 1.25rem !important;
       }
     }
   `;
