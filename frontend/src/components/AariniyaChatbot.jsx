@@ -54,7 +54,7 @@ export default function AariniyaChatbot() {
       } else if (text.includes('price') || text.includes('cost') || text.includes('buy') || text.includes('order')) {
         replyText = '🛍️ A 900g jar of our premium Deep Forest Multifloral Honey is priced at ₹1,970. We offer bundle savings: 2 Jars for ₹3,690, and a Family Pack of 5 Jars for ₹8,450. You can browse and order directly from the main product section!';
       } else {
-        replyText = '✉️ I want to ensure you get the best assistance. If you have order queries, shipping questions, or special requests, please email our support team at **support@aariniya.com** and we will get back to you shortly!';
+        replyText = '✉️ I want to ensure you get the best assistance. If you have order queries, shipping questions, or special requests, please email our support team at **techoneom@gmail.com** and we will get back to you shortly!';
       }
 
       const botMessage = {

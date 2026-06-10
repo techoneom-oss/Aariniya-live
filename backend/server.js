@@ -846,7 +846,7 @@ Total Amount:    INR ${Number(order.total_amount).toFixed(2)}
     
     <div class="footer">
       Thank you for shopping with us! <br>
-      For queries, support, or feedback, email us at support@aariniya.com
+      For queries, support, or feedback, email us at techoneom@gmail.com
     </div>
   </div>
 </body>
