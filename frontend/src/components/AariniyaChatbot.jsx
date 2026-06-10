@@ -41,16 +41,24 @@ export default function AariniyaChatbot() {
       let replyText = '';
       const text = textToSend.toLowerCase();
 
-      if (text.includes('honey') || text.includes('pure') || text.includes('raw') || text.includes('harvest') || text.includes('organic')) {
-        replyText = '🍯 **Aariniya Deep Forest Honey** is harvested in small, single-source batches from the pristine forest ecosystems of Northeast India. It is 100% raw, unpasteurized, and unfiltered, preserving all natural pollen and enzymes. You can taste the rich, complex floral diversity of wild forest blossoms!';
+      if (text.includes('aarini') && (text.includes('who') || text.includes('profile') || text.includes('founder'))) {
+        replyText = '🌿 **Aarini Devyani** is the symbolic founder and face of AARINIYA. She represents the spirit and philosophy of our brand—nature, wellness, balance, and authenticity. At 19, inspired by her roots in Northeast India, she leads a lifestyle centered around yoga, fitness, travel, and nature exploration. She is a representation of our values rather than a celebrity figure.';
+      } else if (text.includes('honey') || text.includes('pure') || text.includes('raw') || text.includes('harvest') || text.includes('flagship') || text.includes('product')) {
+        replyText = '🍯 **AARINIYA Deep Forest Multifloral Honey** is our flagship product. It is a carefully selected, premium multifloral forest honey inspired by the rich biodiversity of natural forest ecosystems. Harvested responsibly and packed in small batches inside premium glass packaging, it features a rich natural aroma and distinctive flavor profile. *(Please note: As a premium natural product, we make no medical claims to cure, prevent, or treat any diseases).*';
+      } else if (text.includes('different') || text.includes('unlike') || text.includes('compare') || text.includes('special')) {
+        replyText = '✨ **What makes AARINIYA different?** Unlike standard commodity honey brands, AARINIYA is a premium wellness experience. We combine authenticity, nature-inspired stories, sustainable community values, and premium quality into a complete daily ritual that helps you reconnect with nature.';
       } else if (text.includes('checkout') || text.includes('guest') || text.includes('account') || text.includes('login') || text.includes('sign in') || text.includes('without log')) {
-        replyText = '🚚 **Guest Checkout is now fully supported!** You do not need to create an account or sign in to purchase. Just add items to your cart, click checkout, fill in your contact and shipping details, and proceed directly to payment. Simple and fast!';
+        replyText = '🚚 **Guest Checkout**: Yes, absolutely! You can now checkout as a guest without creating an account or logging in. Simply add your items to the cart, fill in your details, and proceed directly to payment.';
       } else if (text.includes('yoga') || text.includes('course') || text.includes('diet') || text.includes('enroll') || text.includes('program')) {
-        replyText = '🧘 We offer premium wellness courses to complement your honey ritual:\n\n1. **Forest Morning Yoga Flow (21 Days)**: Guided vinyasa for strength & mindfulness.\n2. **Deep Breathing & Meditation (10 Days)**: Calm stress & release tension.\n3. **Whole-Foods Diet Plan (4 Weeks)**: Mindful nutrition recipes & elimination of refined sugars.\n\nEnroll via the **"Wellness Courses"** tab at the top!';
+        replyText = '🧘 We offer premium wellness courses to complement your daily honey ritual:\n\n1. **Forest Morning Yoga Flow (21 Days)**: Guided vinyasa for strength & mindfulness.\n2. **Deep Breathing & Meditation (10 Days)**: Calm stress & release tension.\n3. **Whole-Foods Diet Plan (4 Weeks)**: Mindful nutrition recipes & elimination of refined sugars.\n\nYou can enroll via the **"Wellness Courses"** tab at the top!';
       } else if (text.includes('pincode') || text.includes('pin') || text.includes('zip') || text.includes('post') || text.includes('city') || text.includes('state') || text.includes('auto-fill') || text.includes('automatic')) {
         replyText = '📍 **Auto-fill Pincode Integration**: When entering your delivery details at checkout, simply type your 6-digit Indian PIN code. Our system will query the official India Post API and automatically populate the **City** and **State** for you, making checkout error-free and seamless!';
       } else if (text.includes('hello') || text.includes('hi') || text.includes('hey') || text.includes('greetings')) {
-        replyText = '🌿 Hello! How can I assist you with Aariniya honey, courses, or guest checkout today? Feel free to click any of the quick helper buttons below.';
+        replyText = '🌿 Greetings! I am your Aariniya Wellness Assistant. How may I guide your wellness ritual today? You can ask me about our Deep Forest Honey, our founder Aarini, or our wellness programs.';
+      } else if (text.includes('forest') || text.includes('origin') || text.includes('mountain') || text.includes('waterfall') || text.includes('community')) {
+        replyText = '🌳 **Forest & Community Story**: The forests behind AARINIYA represent biodiversity, natural beauty, and balance. Our brand is inspired by forest landscapes, waterfalls, and mountain regions, and we carry a deep respect and appreciation for the traditional practices of local communities living close to nature.';
+      } else if (text.includes('future') || text.includes('ecosystem') || text.includes('category') || text.includes('retreat')) {
+        replyText = '🌱 **Future Brand Ecosystem**: While honey is our flagship product, AARINIYA is building a broader nature-inspired wellness ecosystem. In the future, we plan to expand into herbal wellness, natural foods, mindful lifestyle products, wellness experiences, and nature retreats.';
       } else if (text.includes('price') || text.includes('cost') || text.includes('buy') || text.includes('order')) {
         replyText = '🛍️ A 900g jar of our premium Deep Forest Multifloral Honey is priced at ₹1,970. We offer bundle savings: 2 Jars for ₹3,690, and a Family Pack of 5 Jars for ₹8,450. You can browse and order directly from the main product section!';
       } else {
@@ -70,10 +78,10 @@ export default function AariniyaChatbot() {
   };
 
   const quickReplies = [
-    { text: '🚚 Guest Checkout', query: 'Can I checkout as guest?' },
-    { text: '🍯 Raw Honey Purity', query: 'How is Aariniya honey harvested?' },
-    { text: '🧘 Yoga & Diet Courses', query: 'Tell me about the wellness courses' },
-    { text: '📍 Pincode Auto-fill', query: 'How does pincode auto-fill work?' }
+    { text: '🌿 What is AARINIYA?', query: 'What is AARINIYA?' },
+    { text: '🍯 Flagship Honey', query: 'Tell me about AARINIYA Deep Forest Honey' },
+    { text: '👤 Who is Aarini?', query: 'Who is Aarini?' },
+    { text: '🚚 Guest Checkout', query: 'Can I checkout as guest?' }
   ];
 
   return (
