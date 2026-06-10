@@ -14,6 +14,7 @@ export default function CartDrawer({ isOpen, onClose, cartItems, onUpdateQuantit
     postal_code: '',
   });
   const [loading, setLoading] = useState(false);
+  const [pincodeStatus, setPincodeStatus] = useState(''); // '', 'loading', 'found', 'error'
 
   // Auto-populate user details when logged in
   useEffect(() => {
@@ -44,7 +45,35 @@ export default function CartDrawer({ isOpen, onClose, cartItems, onUpdateQuantit
   }, [user, isOpen]);
 
   const handleInputChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+
+    // Auto-fill city & state from pincode (India Post API)
+    if (name === 'postal_code') {
+      const pin = value.replace(/\D/g, '');
+      if (pin.length === 6) {
+        setPincodeStatus('loading');
+        fetch(`https://api.postalpincode.in/pincode/${pin}`)
+          .then(r => r.json())
+          .then(data => {
+            if (data && data[0] && data[0].Status === 'Success') {
+              const post = data[0].PostOffice[0];
+              setFormData(prev => ({
+                ...prev,
+                city: post.District || post.Name || prev.city,
+                state: post.State || prev.state,
+                postal_code: pin,
+              }));
+              setPincodeStatus('found');
+            } else {
+              setPincodeStatus('error');
+            }
+          })
+          .catch(() => setPincodeStatus('error'));
+      } else {
+        setPincodeStatus('');
+      }
+    }
   };
 
   const totalAmount = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
@@ -318,41 +347,62 @@ export default function CartDrawer({ isOpen, onClose, cartItems, onUpdateQuantit
                   />
                 </div>
 
+                {/* Pincode — comes first so city/state auto-fill */}
+                <div className="form-group" style={{ position: 'relative' }}>
+                  <label className="form-label">Pincode</label>
+                  <input
+                    type="text"
+                    name="postal_code"
+                    className="form-input"
+                    value={formData.postal_code}
+                    onChange={handleInputChange}
+                    maxLength={6}
+                    placeholder="6-digit PIN"
+                    required
+                    style={{ paddingRight: '2.2rem' }}
+                  />
+                  {pincodeStatus === 'loading' && (
+                    <span style={styles.pincodeSpinner}>⏳</span>
+                  )}
+                  {pincodeStatus === 'found' && (
+                    <span style={{ ...styles.pincodeSpinner, color: '#2d6a4f' }}>✓</span>
+                  )}
+                  {pincodeStatus === 'error' && (
+                    <span style={{ ...styles.pincodeSpinner, color: '#9a3434' }}>✗</span>
+                  )}
+                  {pincodeStatus === 'found' && (
+                    <p style={{ fontSize: '0.72rem', color: 'var(--color-success)', marginTop: '3px' }}>✓ City &amp; State auto-filled</p>
+                  )}
+                  {pincodeStatus === 'error' && (
+                    <p style={{ fontSize: '0.72rem', color: 'var(--color-error)', marginTop: '3px' }}>Invalid PIN — please check</p>
+                  )}
+                </div>
+
                 <div style={styles.row}>
                   <div className="form-group" style={{ flex: 1 }}>
                     <label className="form-label">City</label>
-                    <input 
-                      type="text" 
+                    <input
+                      type="text"
                       name="city"
-                      className="form-input" 
+                      className="form-input"
                       value={formData.city}
                       onChange={handleInputChange}
                       required
+                      placeholder="Auto-filled from PIN"
                     />
                   </div>
                   <div className="form-group" style={{ flex: 1 }}>
                     <label className="form-label">State</label>
-                    <input 
-                      type="text" 
+                    <input
+                      type="text"
                       name="state"
-                      className="form-input" 
+                      className="form-input"
                       value={formData.state}
                       onChange={handleInputChange}
                       required
+                      placeholder="Auto-filled from PIN"
                     />
                   </div>
-                </div>
-
-                <div className="form-group">
-                  <label className="form-label">Pincode / Zip Code</label>
-                  <input 
-                    type="text" 
-                    name="postal_code"
-                    className="form-input" 
-                    value={formData.postal_code}
-                    onChange={handleInputChange}
-                    required
-                  />
                 </div>
               </form>
             </>
@@ -519,7 +569,14 @@ const styles = {
   },
   row: {
     display: 'flex',
-    gap: '1rem',
+    gap: '0.75rem',
+  },
+  pincodeSpinner: {
+    position: 'absolute',
+    right: '0.75rem',
+    top: '2.4rem',
+    fontSize: '0.85rem',
+    lineHeight: 1,
   },
   subtotalRow: {
     display: 'flex',

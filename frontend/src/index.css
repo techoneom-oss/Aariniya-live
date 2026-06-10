@@ -1,4 +1,4 @@
-﻿/* Aariniya Premium Styling Design System */
+/* Aariniya Premium Styling Design System */
 
 :root {
   /* Colors */
@@ -46,17 +46,28 @@
   padding: 0;
 }
 
-html, body {
-  overflow-x: hidden;
-  max-width: 100%;
-}
-
 html {
   scroll-behavior: smooth;
   font-family: var(--font-sans);
   color: var(--color-text-main);
   background-color: var(--bg-primary);
   -webkit-font-smoothing: antialiased;
+  /* Full-bleed mobile */
+  width: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  width: 100%;
+  overflow-x: hidden;
+  /* Prevent bounce scroll from showing bg color on overscroll */
+  background-color: var(--bg-primary);
+}
+
+#root {
+  width: 100%;
+  overflow-x: hidden;
+  position: relative;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -637,19 +648,20 @@ button, input, textarea, select {
   }
 }
 
-/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+/* ───────────────────────────────────────────────
    PRODUCT DETAIL PAGE  (pd-* namespace)
    Mobile-first, Minimalist/Aariniya reference style
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+─────────────────────────────────────────────── */
 
-/* Page wrapper â€“ no horizontal overflow */
+/* Page wrapper – no horizontal overflow */
 .pd-page {
   overflow-x: hidden;
   padding-bottom: 5rem;
   background-color: var(--bg-primary);
+  width: 100%;
 }
 
-/* â”€â”€ MAIN 2-COL GRID â”€â”€ */
+/* ── MAIN 2-COL GRID ── */
 .pd-grid {
   max-width: 1200px;
   margin: 0 auto;
@@ -1394,17 +1406,22 @@ button, input, textarea, select {
     grid-template-columns: 1fr;
     gap: 0;
     padding: 0;
+    width: 100%;
   }
 
-  /* Gallery takes full viewport width on mobile */
+  /* Gallery: full viewport bleed */
   .pd-gallery {
     position: static;
-    /* Edge-to-edge image on mobile */
+    width: 100vw;
+    margin-left: calc(-1 * ((100vw - 100%) / 2));
+    /* Fallback: just ensure no horizontal overflow */
+    max-width: 100vw;
   }
 
   .pd-main-img-wrap {
     border-radius: 0;
-    aspect-ratio: 1 / 1;
+    width: 100%;
+    aspect-ratio: 4 / 5;  /* Portrait – looks great like Aariniya screenshot */
   }
 
   .pd-thumbs {
@@ -1439,7 +1456,8 @@ button, input, textarea, select {
 
 @media (max-width: 600px) {
   .pd-main-img-wrap {
-    aspect-ratio: 1 / 1;  /* square on small screens */
+    aspect-ratio: 4 / 5;  /* portrait on small screens */
+    width: 100%;
   }
 
   .pd-thumb-btn {
