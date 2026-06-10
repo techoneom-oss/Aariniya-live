@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import CartDrawer from './components/CartDrawer';
+import AariniyaChatbot from './components/AariniyaChatbot';
 import Home from './pages/Home';
 import ProductDetail from './pages/ProductDetail';
 import MyJourney from './pages/MyJourney';
@@ -115,6 +116,9 @@ export default function App() {
         user={user}
         setActivePage={setActivePage}
       />
+
+      {/* Floating AI Chatbot */}
+      <AariniyaChatbot />
     </div>
   );
 }

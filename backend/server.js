@@ -9,6 +9,9 @@ import db from './database.js';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import https from 'https';
+import http from 'http';
+import { URL } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -49,6 +52,110 @@ const authenticateToken = (req, res, next) => {
     req.user = user;
     next();
   });
+};
+
+const authenticateTokenOptional = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+  
+  if (!token || token === 'undefined' || token === 'null' || token === 'Bearer') {
+    req.user = null;
+    return next();
+  }
+  
+  jwt.verify(token, JWT_SECRET, (err, user) => {
+    if (err) {
+      // If token is invalid or expired, just treat as guest instead of blocking
+      req.user = null;
+      return next();
+    }
+    req.user = user;
+    next();
+  });
+};
+
+// --- Webhook / Google Sheets Helper ---
+const sendPayloadToWebhook = (urlStr, payload) => {
+  return new Promise((resolve, reject) => {
+    try {
+      const parsedUrl = new URL(urlStr);
+      const postData = JSON.stringify(payload);
+      const client = parsedUrl.protocol === 'https:' ? https : http;
+
+      const options = {
+        hostname: parsedUrl.hostname,
+        port: parsedUrl.port || (parsedUrl.protocol === 'https:' ? 443 : 80),
+        path: parsedUrl.pathname + parsedUrl.search,
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Content-Length': Buffer.byteLength(postData)
+        }
+      };
+
+      const req = client.request(options, (res) => {
+        let data = '';
+        res.on('data', (chunk) => { data += chunk; });
+        res.on('end', () => { resolve(data); });
+      });
+
+      req.on('error', (e) => { reject(e); });
+      req.write(postData);
+      req.end();
+    } catch (err) {
+      reject(err);
+    }
+  });
+};
+
+const sendOrderToGoogleSheet = async (order) => {
+  const webhookUrl = process.env.GOOGLE_SHEET_WEBHOOK_URL;
+  if (!webhookUrl) {
+    console.log("Google Sheet Webhook URL not configured. Skipping sheet logging.");
+    return;
+  }
+  
+  try {
+    let itemsParsed = [];
+    try {
+      itemsParsed = typeof order.items === 'string' ? JSON.parse(order.items) : order.items;
+    } catch(e) {
+      itemsParsed = order.items || [];
+    }
+
+    let addressParsed = {};
+    try {
+      addressParsed = typeof order.address === 'string' ? JSON.parse(order.address) : order.address;
+    } catch(e) {
+      addressParsed = order.address || {};
+    }
+
+    const itemsSummary = itemsParsed.map(item => {
+      const qty = item.qty || item.quantity || 1;
+      return `${item.name} (${qty})`;
+    }).join(', ');
+
+    const addressStr = `${addressParsed.address_line1 || ''}, ${addressParsed.address_line2 || ''}, ${addressParsed.city || ''}, ${addressParsed.state || ''} - ${addressParsed.postal_code || ''}`;
+
+    const payload = {
+      order_id: order.razorpay_order_id || `order_${order.id}`,
+      payment_id: order.razorpay_payment_id || 'N/A',
+      customer_name: order.customer_name,
+      email: order.email,
+      phone: order.phone,
+      address: addressStr,
+      items: itemsSummary,
+      total_amount: order.total_amount,
+      status: order.payment_status,
+      date: order.created_at || new Date().toISOString()
+    };
+
+    console.log("Sending order details to Google Sheets...", payload);
+    await sendPayloadToWebhook(webhookUrl, payload);
+    console.log("Successfully sent order to Google Sheets Webhook.");
+  } catch (error) {
+    console.error("Error sending order to Google Sheets:", error.message);
+  }
 };
 
 const isAdmin = (req, res, next) => {
@@ -272,7 +379,7 @@ const getCourseById = (id) => {
 };
 
 // Create Order (Initiate Checkout)
-app.post('/api/orders/create', authenticateToken, async (req, res) => {
+app.post('/api/orders/create', authenticateTokenOptional, async (req, res) => {
   const { amount, currency, customer_name, email, phone, address, items } = req.body;
   if (amount === undefined || !customer_name || !email || !phone || !address || !items) {
     return res.status(400).json({ error: 'Missing required checkout information' });
@@ -362,7 +469,7 @@ app.post('/api/orders/create', authenticateToken, async (req, res) => {
     `;
 
     db.run(query, [
-      mockOrderId, req.user.id, customer_name, email, phone, JSON.stringify(address), JSON.stringify(items), amount
+      mockOrderId, req.user ? req.user.id : null, customer_name, email, phone, JSON.stringify(address), JSON.stringify(items), amount
     ], function(err) {
       if (err) return res.status(500).json({ error: err.message });
       return res.json({
@@ -387,7 +494,7 @@ app.post('/api/orders/create', authenticateToken, async (req, res) => {
       `;
 
       db.run(query, [
-        razorpayOrder.id, req.user.id, customer_name, email, phone, JSON.stringify(address), JSON.stringify(items), amount
+        razorpayOrder.id, req.user ? req.user.id : null, customer_name, email, phone, JSON.stringify(address), JSON.stringify(items), amount
       ], function(dbErr) {
         if (dbErr) return res.status(500).json({ error: dbErr.message });
         res.json({
@@ -748,6 +855,11 @@ Total Amount:    INR ${Number(order.total_amount).toFixed(2)}
       fs.writeFileSync(txtPath, txtContent, 'utf8');
       fs.writeFileSync(htmlPath, htmlContent, 'utf8');
       console.log(`Receipts written successfully for ${orderId}`);
+      
+      // Async log to Google Sheets if webhook configured
+      sendOrderToGoogleSheet(order).catch(err => {
+        console.error("Error logging to Google Sheets asynchronously:", err);
+      });
     } catch (writeErr) {
       console.error("Error writing receipt files:", writeErr);
     }

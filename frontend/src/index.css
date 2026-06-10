@@ -1517,3 +1517,32 @@ button, input, textarea, select {
 
   .profile-header h1 { font-size: 1.6rem; }
 }
+
+/* ── CHATBOT KEYFRAMES & UTILITIES ── */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes chatbotDotBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.typing-indicator-dots span {
+  width: 6px;
+  height: 6px;
+  background-color: #6b7771;
+  border-radius: 50%;
+  display: inline-block;
+  animation: chatbotDotBounce 1.4s infinite ease-in-out both;
+}
+.typing-indicator-dots span:nth-child(1) { animation-delay: -0.32s; }
+.typing-indicator-dots span:nth-child(2) { animation-delay: -0.16s; }
+.typing-indicator-dots span:nth-child(3) { animation-delay: 0s; }
