@@ -72,7 +72,7 @@ export default function Courses({ onEnrollCourse }) {
       </div>
 
       {/* Courses Grid */}
-      <div className="responsive-grid-3" style={{ marginBottom: '5rem' }}>
+      <div style={styles.grid}>
         {filteredCourses.map((c) => (
           <div key={c.id} className="card" style={styles.courseCard}>
             <div style={styles.imageBox}>
@@ -304,4 +304,21 @@ const styles = {
   }
 };
 
-
+// Inject responsive grid styling
+if (typeof document !== 'undefined') {
+  const style = document.createElement('style');
+  style.innerHTML += `
+    @media (max-width: 991px) {
+      .container [style*="grid"] {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 2rem !important;
+      }
+    }
+    @media (max-width: 650px) {
+      .container [style*="grid"] {
+        grid-template-columns: 1fr !important;
+      }
+    }
+  `;
+  document.head.appendChild(style);
+}

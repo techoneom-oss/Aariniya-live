@@ -8,7 +8,7 @@ export default function Footer({ setActivePage }) {
 
   return (
     <footer style={styles.footer}>
-      <div className="container footer-grid">
+      <div className="container" style={styles.grid}>
         {/* Brand Column */}
         <div style={styles.brandCol}>
           <h3 style={styles.logo}>AARINIYA</h3>
@@ -35,7 +35,10 @@ export default function Footer({ setActivePage }) {
         {/* Contact Column */}
         <div>
           <h4 style={styles.heading}>Connect</h4>
-          <p style={styles.text}>Aariniya Wellness</p>
+          <p style={styles.text}>Aariniya Wellness Private Ltd.</p>
+          <p style={styles.text}>Guwahati, Assam - India</p>
+          <p style={styles.text}>Email: care@aariniya.com</p>
+          <p style={styles.text}>Ph: +91 88998-XXXXX</p>
         </div>
 
         {/* Newsletter Column */}
@@ -195,4 +198,16 @@ const styles = {
   }
 };
 
-
+// Inject responsive styles
+if (typeof document !== 'undefined') {
+  const style = document.createElement('style');
+  style.innerHTML += `
+    @media (max-width: 768px) {
+      footer [style*="grid"] {
+        grid-template-columns: 1fr !important;
+        gap: 2rem !important;
+      }
+    }
+  `;
+  document.head.appendChild(style);
+}
