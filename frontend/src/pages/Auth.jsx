@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Mail, Lock, User, Phone, CheckCircle, ArrowRight } from 'lucide-react';
 import { API_BASE_URL } from '../config';
 

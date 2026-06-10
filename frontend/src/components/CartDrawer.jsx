@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { X, Trash2, ShieldCheck, CreditCard, ShoppingBag } from 'lucide-react';
 import { API_BASE_URL } from '../config';
 
@@ -18,6 +18,7 @@ export default function CartDrawer({ isOpen, onClose, cartItems, onUpdateQuantit
   // Auto-populate user details when logged in
   useEffect(() => {
     if (user) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setFormData({
         name: user.full_name || '',
         email: user.email || '',
@@ -93,7 +94,7 @@ export default function CartDrawer({ isOpen, onClose, cartItems, onUpdateQuantit
       } else {
         // Run real Razorpay gateway
         const options = {
-          key: 'rzp_test_mockKeyId123', // Will be replaced by backend key if provided
+          key: order.key || import.meta.env.VITE_RAZORPAY_KEY_ID || 'rzp_test_mockKeyId123',
           amount: order.amount,
           currency: order.currency,
           name: 'AARINIYA',
@@ -151,7 +152,7 @@ export default function CartDrawer({ isOpen, onClose, cartItems, onUpdateQuantit
 
       if (!verifyRes.ok) throw new Error("Payment signature verification failed.");
       
-      const verification = await verifyRes.json();
+      await verifyRes.json();
       
       alert("🎉 Ritual Order Successful!\n\nYour order has been logged into the nature ledger.");
       

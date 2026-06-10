@@ -1,4 +1,3 @@
-import React from 'react';
 import { ArrowRight, Leaf, Shield, Compass, Sparkles } from 'lucide-react';
 
 export default function Home({ setActivePage }) {

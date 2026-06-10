@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { LogOut, Home, Mail, Phone, Calendar, ShoppingBag, ShieldCheck } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { LogOut, Calendar, ShoppingBag, ShieldCheck } from 'lucide-react';
 import { API_BASE_URL } from '../config';
 
 export default function Profile({ user, setGlobalUser, setActivePage }) {
@@ -18,14 +18,10 @@ export default function Profile({ user, setGlobalUser, setActivePage }) {
   const [saving, setSaving] = useState(false);
   const [feedback, setFeedback] = useState({ type: '', msg: '' });
 
-  useEffect(() => {
-    if (!user) {
-      setActivePage('auth');
-      return;
-    }
-    fetchUserProfile();
-    fetchUserOrders();
-  }, [user]);
+  const showFeedback = (type, msg) => {
+    setFeedback({ type, msg });
+    setTimeout(() => setFeedback({ type: '', msg: '' }), 4000);
+  };
 
   const fetchUserProfile = async () => {
     try {
@@ -67,10 +63,16 @@ export default function Profile({ user, setGlobalUser, setActivePage }) {
     }
   };
 
-  const showFeedback = (type, msg) => {
-    setFeedback({ type, msg });
-    setTimeout(() => setFeedback({ type: '', msg: '' }), 4000);
-  };
+  useEffect(() => {
+    if (!user) {
+      setActivePage('auth');
+      return;
+    }
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    fetchUserProfile();
+    fetchUserOrders();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
 
   const handleInputChange = (e) => {
     setProfile({ ...profile, [e.target.name]: e.target.value });

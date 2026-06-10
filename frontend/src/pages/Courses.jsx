@@ -1,15 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { Calendar, Tag, ShieldCheck, Heart, Sparkles } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Calendar, Sparkles } from 'lucide-react';
 import { API_BASE_URL } from '../config';
 
 export default function Courses({ onEnrollCourse }) {
   const [courses, setCourses] = useState([]);
   const [filter, setFilter] = useState('all');
   const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetchCourses();
-  }, []);
 
   const fetchCourses = async () => {
     try {
@@ -23,6 +19,11 @@ export default function Courses({ onEnrollCourse }) {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    fetchCourses();
+  }, []);
 
   const filteredCourses = filter === 'all' 
     ? courses 

@@ -1,5 +1,4 @@
-import React from 'react';
-import { ShieldCheck, Flame, Trees, HeartPulse } from 'lucide-react';
+import { ShieldCheck, Trees, HeartPulse } from 'lucide-react';
 
 export default function MyJourney() {
   return (

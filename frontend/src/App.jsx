@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import CartDrawer from './components/CartDrawer';
@@ -14,20 +14,18 @@ export default function App() {
   const [activePage, setActivePage] = useState('home');
   const [cartItems, setCartItems] = useState([]);
   const [cartOpen, setCartOpen] = useState(false);
-  const [user, setUser] = useState(null);
-
-  // Load user session on mount
-  useEffect(() => {
+  const [user, setUser] = useState(() => {
     const savedUser = localStorage.getItem('aariniya_user');
     if (savedUser) {
       try {
-        setUser(JSON.parse(savedUser));
+        return JSON.parse(savedUser);
       } catch (e) {
         console.error("Failed to parse user session", e);
         localStorage.removeItem('aariniya_user');
       }
     }
-  }, []);
+    return null;
+  });
 
   // Cart actions
   const handleAddToCart = (newItem) => {

@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { Star, ShieldCheck, Heart, Share2, Plus, Minus, Check, MessageSquare } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Star, ShieldCheck, Plus, Minus, Check, MessageSquare } from 'lucide-react';
 import { API_BASE_URL } from '../config';
 
-export default function ProductDetail({ onAddToCart, setActivePage }) {
+export default function ProductDetail({ onAddToCart }) {
   const [product, setProduct] = useState(null);
   const [reviews, setReviews] = useState([]);
   const [activeImage, setActiveImage] = useState('');
@@ -22,19 +22,22 @@ export default function ProductDetail({ onAddToCart, setActivePage }) {
   const [reviewSuccess, setReviewSuccess] = useState(false);
   const [showReviewForm, setShowReviewForm] = useState(false);
 
-  useEffect(() => {
-    fetchProductDetails();
-  }, []);
+  const getProductPackImage = (pack) => {
+    if (pack === 1) return '/assets/product_qty_1.jpg';
+    if (pack === 2) return '/assets/product_qty_2.jpg';
+    if (pack === 5) return '/assets/product_qty_5.jpg';
+    return '/assets/product_qty_1.jpg';
+  };
 
   const fetchProductDetails = async () => {
     try {
       // Fetch the honey product (seeded as ID 1)
       const res = await fetch(`${API_BASE_URL}/api/products/1`);
       if (!res.ok) throw new Error('Product not found');
-      const data = await res.res ? await res.json() : await res.json();
+      const data = await res.json();
       setProduct(data);
       if (data.images && data.images.length > 0) {
-        setActiveImage(data.images[0]);
+        setActiveImage(getProductPackImage(selectedPack));
       }
       
       // Fetch reviews
@@ -47,6 +50,12 @@ export default function ProductDetail({ onAddToCart, setActivePage }) {
       console.error(err);
     }
   };
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    fetchProductDetails();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleReviewSubmit = async (e) => {
     e.preventDefault();
@@ -95,21 +104,13 @@ export default function ProductDetail({ onAddToCart, setActivePage }) {
     setActiveAccordion(activeAccordion === index ? null : index);
   };
 
-  const getProductPackImage = (pack) => {
-    if (pack === 1) return '/assets/product_qty_1.jpg';
-    if (pack === 2) return '/assets/product_qty_2.jpg';
-    if (pack === 5) return '/assets/product_qty_5.jpg';
-    return '/assets/product_qty_1.jpg';
-  };
-
   const currentPrice = selectedPack === 1 ? 1970 : (selectedPack === 2 ? 3690 : 8450);
   const currentOriginalPrice = selectedPack === 1 ? 2400 : (selectedPack === 2 ? 4800 : 12000);
 
-  useEffect(() => {
-    if (product) {
-      setActiveImage(getProductPackImage(selectedPack));
-    }
-  }, [selectedPack, product]);
+  const handlePackChange = (pack) => {
+    setSelectedPack(pack);
+    setActiveImage(getProductPackImage(pack));
+  };
 
   const handleAddToCartClick = () => {
     if (product) {
@@ -239,7 +240,7 @@ export default function ProductDetail({ onAddToCart, setActivePage }) {
                   ...styles.sizeBtn, 
                   ...(selectedPack === 1 ? styles.activeSizeBtn : {})
                 }}
-                onClick={() => setSelectedPack(1)}
+                onClick={() => handlePackChange(1)}
               >
                 <span style={{ fontWeight: '700' }}>1 Jar</span>
                 <span style={{ fontSize: '0.75rem', marginTop: '2px', opacity: 0.9 }}>₹1,970</span>
@@ -249,7 +250,7 @@ export default function ProductDetail({ onAddToCart, setActivePage }) {
                   ...styles.sizeBtn, 
                   ...(selectedPack === 2 ? styles.activeSizeBtn : {})
                 }}
-                onClick={() => setSelectedPack(2)}
+                onClick={() => handlePackChange(2)}
               >
                 <span style={{ fontWeight: '700' }}>2 Jars</span>
                 <span style={{ fontSize: '0.75rem', marginTop: '2px', opacity: 0.9 }}>₹3,690</span>
@@ -260,7 +261,7 @@ export default function ProductDetail({ onAddToCart, setActivePage }) {
                   ...styles.sizeBtn, 
                   ...(selectedPack === 5 ? styles.activeSizeBtn : {})
                 }}
-                onClick={() => setSelectedPack(5)}
+                onClick={() => handlePackChange(5)}
               >
                 <span style={{ fontWeight: '700' }}>5 Jars</span>
                 <span style={{ fontSize: '0.75rem', marginTop: '2px', opacity: 0.9 }}>₹8,450</span>
