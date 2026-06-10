@@ -13,7 +13,7 @@ export default function Home({ setActivePage }) {
         <div style={styles.heroOverlay}></div>
         <div className="container" style={styles.heroContent}>
           <span style={styles.heroKicker}>Nature's Sweetest Ritual</span>
-          <h1 style={styles.heroTitle}>A Wellness Brand inspired by the forests of Northeast India</h1>
+          <h1 className="hero-title">A Wellness Brand inspired by the forests of Northeast India</h1>
           <p style={styles.heroText}>
             Built on the belief that nature already provides what modern life often lacks — simplicity, balance, and nourishment.
           </p>
@@ -31,8 +31,8 @@ export default function Home({ setActivePage }) {
 
       {/* Flagship Product Teaser Section */}
       <section style={styles.teaserSection}>
-        <div className="container" style={styles.teaserGrid}>
-          <div style={styles.teaserImageContainer}>
+        <div className="container teaser-grid">
+          <div className="teaser-image-container">
             <img 
               src="/assets/product_jar_forest.jpg" 
               alt="Aariniya Deep Forest Honey Jar" 
@@ -67,7 +67,7 @@ export default function Home({ setActivePage }) {
             <p style={styles.sectionSub}>Wellness is not a destination. It is a slow, daily ritual.</p>
           </div>
 
-          <div style={styles.ritualsGrid}>
+          <div className="rituals-grid">
             <div style={styles.ritualCard}>
               <div style={styles.ritualNum}>01</div>
               <h3 style={styles.ritualTitle}>Wake Up With Intention</h3>
@@ -94,7 +94,7 @@ export default function Home({ setActivePage }) {
 
       {/* Founder Profile Teaser */}
       <section style={styles.founderSection}>
-        <div className="container" style={styles.founderGrid}>
+        <div className="container founder-grid">
           <div style={styles.founderContent}>
             <span style={styles.teaserKicker}>Behind the Brand</span>
             <h2 style={styles.teaserTitle}>Meet Aarini Devrani</h2>
@@ -109,7 +109,7 @@ export default function Home({ setActivePage }) {
             </button>
           </div>
           <div style={styles.founderImages}>
-            <div style={styles.founderImageFrame}>
+            <div className="founder-image-frame">
               <img 
                 src="/assets/product_gallery_new_3.jpg" 
                 alt="Aarini Devrani morning wellness ritual" 
@@ -153,7 +153,7 @@ const styles = {
     left: 0,
     width: '100%',
     height: '100%',
-    backgroundColor: 'rgba(28, 53, 45, 0.65)', // Elegant dark forest green overlay
+    backgroundColor: 'rgba(28, 53, 45, 0.65)',
     zIndex: 1,
   },
   heroContent: {
@@ -172,22 +172,14 @@ const styles = {
     display: 'block',
     marginBottom: '1rem',
   },
-  heroTitle: {
-    fontFamily: 'var(--font-serif)',
-    fontSize: '3.5rem',
-    color: '#ffffff',
-    marginBottom: '1.5rem',
-    fontWeight: '700',
-    lineHeight: '1.15',
-  },
   heroText: {
     fontFamily: 'var(--font-sans)',
-    fontSize: '1.1rem',
+    fontSize: '1.05rem',
     lineHeight: '1.6',
     color: '#edf2f0',
-    marginBottom: '2.5rem',
+    marginBottom: '2rem',
     fontWeight: '300',
-    maxWidth: '600px',
+    maxWidth: '100%',
   },
   heroBtns: {
     display: 'flex',
@@ -199,21 +191,8 @@ const styles = {
     borderColor: '#ffffff',
   },
   teaserSection: {
-    padding: '7rem 0',
+    padding: '5rem 0',
     backgroundColor: '#ffffff',
-  },
-  teaserGrid: {
-    display: 'grid',
-    gridTemplateColumns: '1fr 1fr',
-    gap: '5rem',
-    alignItems: 'center',
-  },
-  teaserImageContainer: {
-    position: 'relative',
-    borderRadius: 'var(--radius-lg)',
-    overflow: 'hidden',
-    boxShadow: 'var(--shadow-medium)',
-    height: '650px',
   },
   teaserImage: {
     width: '100%',
@@ -276,7 +255,7 @@ const styles = {
     fontWeight: '500',
   },
   ritualsSection: {
-    padding: '7rem 0',
+    padding: '5rem 0',
     backgroundColor: 'var(--bg-secondary)',
   },
   sectionHeader: {
@@ -301,11 +280,6 @@ const styles = {
   sectionSub: {
     color: 'var(--color-text-muted)',
     fontSize: '1rem',
-  },
-  ritualsGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(4, 1fr)',
-    gap: '2rem',
   },
   ritualCard: {
     backgroundColor: '#ffffff',
@@ -334,26 +308,17 @@ const styles = {
     color: 'var(--color-text-muted)',
   },
   founderSection: {
-    padding: '7rem 0',
+    padding: '5rem 0',
     backgroundColor: '#ffffff',
   },
-  founderGrid: {
-    display: 'grid',
-    gridTemplateColumns: '1.2fr 1fr',
-    gap: '5rem',
-    alignItems: 'center',
+  founderContent: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
   },
   founderImages: {
     display: 'flex',
     justifyContent: 'center',
-  },
-  founderImageFrame: {
-    borderRadius: 'var(--radius-lg)',
-    overflow: 'hidden',
-    boxShadow: 'var(--shadow-medium)',
-    width: '100%',
-    maxWidth: '400px',
-    height: '580px',
   },
   founderImage: {
     width: '100%',
@@ -361,7 +326,7 @@ const styles = {
     objectFit: 'cover',
   },
   quoteSection: {
-    padding: '6rem 0',
+    padding: '4rem 0',
     backgroundColor: 'var(--color-primary)',
     color: '#ffffff',
     textAlign: 'center',
@@ -388,31 +353,3 @@ const styles = {
     color: 'var(--color-accent)',
   }
 };
-
-// Add styles injection for home page responsive breakpoints
-if (typeof document !== 'undefined') {
-  const style = document.createElement('style');
-  style.innerHTML += `
-    @media (max-width: 991px) {
-      header [style*="heroTitle"] {
-        font-size: 2.6rem !important;
-      }
-      [style*="teaserGrid"], [style*="founderGrid"] {
-        grid-template-columns: 1fr !important;
-        gap: 3rem !important;
-      }
-      [style*="ritualsGrid"] {
-        grid-template-columns: 1fr 1fr !important;
-      }
-    }
-    @media (max-width: 576px) {
-      [style*="ritualsGrid"] {
-        grid-template-columns: 1fr !important;
-      }
-      header [style*="heroTitle"] {
-        font-size: 2.2rem !important;
-      }
-    }
-  `;
-  document.head.appendChild(style);
-}

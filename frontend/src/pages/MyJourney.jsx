@@ -28,7 +28,7 @@ export default function MyJourney() {
 
       {/* Chapter 1 */}
       <section style={styles.section}>
-        <div className="container" style={styles.grid}>
+        <div className="container journey-grid">
           <div style={styles.textCol}>
             <div style={styles.chapterNum}>Chapter I</div>
             <h2 style={styles.chapterTitle}>A Childhood in the Canopy</h2>
@@ -40,7 +40,7 @@ export default function MyJourney() {
             </p>
           </div>
           <div style={styles.imageCol}>
-            <div style={styles.imageBox}>
+            <div className="journey-image-box">
               <img 
                 src="/assets/product_gallery_new_1.jpg" 
                 alt="Aarini Devrani in Forest" 
@@ -62,7 +62,7 @@ export default function MyJourney() {
 
       {/* Chapter 2 & 3 */}
       <section style={{...styles.section, backgroundColor: '#ffffff'}}>
-        <div className="container" style={styles.gridReversed}>
+        <div className="container journey-grid-reversed">
           <div style={styles.textCol}>
             <div style={styles.chapterNum}>Chapter II & III</div>
             <h2 style={styles.chapterTitle}>The Modern Disconnect & Returning to the Source</h2>
@@ -77,7 +77,7 @@ export default function MyJourney() {
             </p>
           </div>
           <div style={styles.imageCol}>
-            <div style={styles.imageBox}>
+            <div className="journey-image-box">
               <img 
                 src="/assets/product_gallery_new_2.jpg" 
                 alt="Authentic Wellness" 
@@ -93,43 +93,43 @@ export default function MyJourney() {
         <div className="container">
           <h2 style={styles.journalTitle}>Forest Visual Journal</h2>
           <p style={styles.journalSub}>Glimpses of Northeast India's pristine ecosystems, harvesting traditions, and ceremonies.</p>
-          <div style={styles.journalGrid}>
-            <div className="journal-card" style={styles.journalCard}>
+          <div className="journey-journal-grid">
+            <div className="journal-card journey-journal-card">
               <img src="/assets/aarini_devrani_5.jpg" alt="Aarini Devrani Ceremonial Attire" style={styles.journalImg} />
               <div style={styles.journalCardOverlay}>
                 <span style={styles.journalCardKicker}>Ceremony</span>
                 <h4 style={styles.journalCardTitle}>Traditional Northeast Ceremonial Attire</h4>
               </div>
             </div>
-            <div className="journal-card" style={styles.journalCard}>
+            <div className="journal-card journey-journal-card">
               <img src="/assets/aarini_devrani_1.jpg" alt="Aarini Devrani Packing Honey" style={styles.journalImg} />
               <div style={styles.journalCardOverlay}>
                 <span style={styles.journalCardKicker}>Process</span>
                 <h4 style={styles.journalCardTitle}>Small Batch Quality Control</h4>
               </div>
             </div>
-            <div className="journal-card" style={styles.journalCard}>
+            <div className="journal-card journey-journal-card">
               <img src="/assets/aarini_devrani_2.jpg" alt="Aarini Devrani in Nature" style={styles.journalImg} />
               <div style={styles.journalCardOverlay}>
                 <span style={styles.journalCardKicker}>Connection</span>
                 <h4 style={styles.journalCardTitle}>Daily Forest Ritual Walk</h4>
               </div>
             </div>
-            <div className="journal-card" style={styles.journalCard}>
+            <div className="journal-card journey-journal-card">
               <img src="/assets/aarini_devrani_3.jpg" alt="Aarini Devrani Forest Story" style={styles.journalImg} />
               <div style={styles.journalCardOverlay}>
                 <span style={styles.journalCardKicker}>Roots</span>
                 <h4 style={styles.journalCardTitle}>A Childhood in the Foothills</h4>
               </div>
             </div>
-            <div className="journal-card" style={styles.journalCard}>
+            <div className="journal-card journey-journal-card">
               <img src="/assets/aarini_devrani_4.jpg" alt="Aarini Devrani Authentic Wellness" style={styles.journalImg} />
               <div style={styles.journalCardOverlay}>
                 <span style={styles.journalCardKicker}>Philosophy</span>
                 <h4 style={styles.journalCardTitle}>Mindful Wellness Lifestyle</h4>
               </div>
             </div>
-            <div className="journal-card" style={styles.journalCard}>
+            <div className="journal-card journey-journal-card">
               <img src="/assets/product_gallery_new_4.jpg" alt="Beekeeping Harvest" style={styles.journalImg} />
               <div style={styles.journalCardOverlay}>
                 <span style={styles.journalCardKicker}>Harvest</span>
@@ -144,7 +144,7 @@ export default function MyJourney() {
       <section style={styles.valuesSection}>
         <div className="container">
           <h2 style={styles.valuesTitle}>Our Core Forest Pillars</h2>
-          <div style={styles.valuesGrid}>
+          <div className="journey-values-grid">
             <div style={styles.valueCard}>
               <Trees size={32} color="var(--color-accent)" style={{ marginBottom: '1rem' }} />
               <h3 style={styles.valueName}>Nature First</h3>
@@ -199,7 +199,7 @@ const styles = {
   },
   bannerSection: {
     position: 'relative',
-    height: '550px',
+    height: '380px',
     overflow: 'hidden',
     display: 'flex',
     justifyContent: 'center',
@@ -221,24 +221,11 @@ const styles = {
     textShadow: '0 2px 10px rgba(0,0,0,0.5)',
   },
   section: {
-    padding: '6rem 0',
+    padding: '4rem 0',
     backgroundColor: 'var(--bg-primary)',
   },
-  grid: {
-    display: 'grid',
-    gridTemplateColumns: '1.1fr 0.9fr',
-    gap: '5rem',
-    alignItems: 'center',
-  },
-  gridReversed: {
-    display: 'grid',
-    gridTemplateColumns: '1.1fr 0.9fr',
-    gap: '5rem',
-    alignItems: 'center',
-    direction: 'rtl', // Swaps columns visually
-  },
   textCol: {
-    direction: 'ltr', // Resets text direction for reversed grid
+    direction: 'ltr',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'flex-start',
@@ -264,14 +251,6 @@ const styles = {
     display: 'flex',
     justifyContent: 'center',
   },
-  imageBox: {
-    width: '100%',
-    maxWidth: '380px',
-    height: '580px',
-    borderRadius: 'var(--radius-lg)',
-    overflow: 'hidden',
-    boxShadow: 'var(--shadow-medium)',
-  },
   narrativeImg: {
     width: '100%',
     height: '100%',
@@ -279,7 +258,7 @@ const styles = {
   },
   pullQuoteSection: {
     backgroundColor: 'var(--bg-secondary)',
-    padding: '5rem 0',
+    padding: '3.5rem 0',
     textAlign: 'center',
     borderTop: '1px solid rgba(28, 53, 45, 0.04)',
     borderBottom: '1px solid rgba(28, 53, 45, 0.04)',
@@ -295,7 +274,7 @@ const styles = {
     fontStyle: 'italic',
   },
   journalSection: {
-    padding: '7rem 0',
+    padding: '4rem 0',
     backgroundColor: '#ffffff',
     borderTop: '1px solid rgba(28, 53, 45, 0.05)',
   },
@@ -310,20 +289,6 @@ const styles = {
     textAlign: 'center',
     color: 'var(--color-text-muted)',
     marginBottom: '4rem',
-  },
-  journalGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(3, 1fr)',
-    gap: '2rem',
-  },
-  journalCard: {
-    position: 'relative',
-    height: '420px',
-    borderRadius: 'var(--radius-lg)',
-    overflow: 'hidden',
-    boxShadow: 'var(--shadow-subtle)',
-    cursor: 'pointer',
-    transition: 'var(--transition-smooth)',
   },
   journalImg: {
     width: '100%',
@@ -359,7 +324,7 @@ const styles = {
     margin: 0,
   },
   valuesSection: {
-    padding: '6rem 0',
+    padding: '4rem 0',
     backgroundColor: 'var(--color-primary)',
     color: '#ffffff',
   },
@@ -368,11 +333,6 @@ const styles = {
     textAlign: 'center',
     marginBottom: '4rem',
     color: '#ffffff',
-  },
-  valuesGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(3, 1fr)',
-    gap: '3rem',
   },
   valueCard: {
     display: 'flex',
@@ -392,45 +352,3 @@ const styles = {
     color: '#a9b9b3',
   }
 };
-
-// Inject responsive rules
-if (typeof document !== 'undefined') {
-  const style = document.createElement('style');
-  style.innerHTML += `
-    @media (max-width: 900px) {
-      [style*="chapterTitle"] {
-        font-size: 1.75rem !important;
-      }
-      [style*="pullQuoteText"] {
-        font-size: 1.4rem !important;
-      }
-      .container [style*="grid"], .container [style*="gridReversed"] {
-        grid-template-columns: 1fr !important;
-        gap: 3rem !important;
-      }
-      .container [style*="valuesGrid"] {
-        grid-template-columns: 1fr !important;
-        gap: 2rem !important;
-      }
-      [style*="imageBox"] {
-        height: 380px !important;
-      }
-      .container [style*="journalGrid"] {
-        grid-template-columns: 1fr 1fr !important;
-        gap: 2rem !important;
-      }
-      [style*="journalCard"] {
-        height: 350px !important;
-      }
-    }
-    @media (max-width: 600px) {
-      .container [style*="journalGrid"] {
-        grid-template-columns: 1fr !important;
-      }
-    }
-    .journal-card:hover img {
-      transform: scale(1.05);
-    }
-  `;
-  document.head.appendChild(style);
-}

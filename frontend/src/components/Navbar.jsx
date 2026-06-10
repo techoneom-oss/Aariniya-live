@@ -14,7 +14,7 @@ export default function Navbar({ activePage, setActivePage, cartCount, user, onC
     <nav style={styles.nav}>
       <div className="container" style={styles.navContainer}>
         {/* Mobile Menu Toggle */}
-        <button style={styles.menuBtn} onClick={() => setMenuOpen(!menuOpen)}>
+        <button className="nav-menu-btn" onClick={() => setMenuOpen(!menuOpen)}>
           {menuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
 
@@ -25,10 +25,7 @@ export default function Navbar({ activePage, setActivePage, cartCount, user, onC
         </div>
 
         {/* Links */}
-        <div style={{
-          ...styles.links,
-          ...(menuOpen ? styles.linksMobileOpen : {})
-        }}>
+        <div className={`nav-links ${menuOpen ? 'open' : ''}`}>
           <span 
             style={{...styles.link, ...(activePage === 'home' ? styles.activeLink : {})}} 
             onClick={() => handleNav('home')}
@@ -199,35 +196,4 @@ const styles = {
     backgroundColor: 'var(--color-success)',
     borderRadius: '50%',
   },
-  /* Responsive styles implemented via standard inline queries or conditional logic */
-  linksMobileOpen: {
-    display: 'flex',
-    flexDirection: 'column',
-    position: 'absolute',
-    top: '75px',
-    left: 0,
-    width: '100%',
-    backgroundColor: 'var(--bg-primary)',
-    padding: '2rem',
-    borderBottom: '1px solid rgba(28, 53, 45, 0.08)',
-    boxShadow: 'var(--shadow-medium)',
-    gap: '1.5rem',
-    alignItems: 'flex-start',
-  }
 };
-
-// CSS media query style injection for responsive layout
-if (typeof document !== 'undefined') {
-  const style = document.createElement('style');
-  style.innerHTML = `
-    @media (max-width: 900px) {
-      nav [style*="menuBtn"] {
-        display: block !important;
-      }
-      nav [style*="links"] {
-        display: none !important;
-      }
-    }
-  `;
-  document.head.appendChild(style);
-}
