@@ -112,7 +112,7 @@ async function main() {
         'Authorization': `Bearer ${token}`
       },
       body: JSON.stringify({
-        amount: 1970,
+        amount: 499,
         currency: 'INR',
         customer_name: 'Preorder Test User',
         email: 'test@preorder.com',
@@ -145,7 +145,7 @@ async function main() {
         'Authorization': `Bearer ${token}`
       },
       body: JSON.stringify({
-        amount: 1970,
+        amount: 499,
         currency: 'INR',
         customer_name: 'Preorder Test User',
         email: 'test@preorder.com',

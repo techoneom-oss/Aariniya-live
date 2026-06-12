@@ -122,7 +122,7 @@ async function main() {
         'Authorization': `Bearer ${token}`
       },
       body: JSON.stringify({
-        amount: 3969, // 1970 (Product 1) + 1999 (Course 1)
+        amount: 2498, // 499 (Product 1) + 1999 (Course 1)
         currency: 'INR',
         customer_name: 'Admin Test User',
         email: 'admin@aariniya.com',
@@ -227,8 +227,8 @@ async function main() {
     const statsAfterData = await statsAfterRes.json();
     console.log(`Updated stats - Revenue: ${statsAfterData.revenue}, Order Count: ${statsAfterData.orderCount}`);
 
-    if (statsAfterData.revenue !== initialRevenue + 3969) {
-      throw new Error(`Revenue did not increase by 3969. Expected ${initialRevenue + 3969}, got ${statsAfterData.revenue}`);
+    if (statsAfterData.revenue !== initialRevenue + 2498) {
+      throw new Error(`Revenue did not increase by 2498. Expected ${initialRevenue + 2498}, got ${statsAfterData.revenue}`);
     }
     if (statsAfterData.orderCount !== initialOrderCount + 1) {
       throw new Error(`Order count did not increase by 1. Expected ${initialOrderCount + 1}, got ${statsAfterData.orderCount}`);

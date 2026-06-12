@@ -426,11 +426,11 @@ app.post('/api/orders/create', authenticateTokenOptional, async (req, res) => {
         let itemPrice = product.price; // fallback
         if (productId === 1) {
           if (packSize === 1) {
-            itemPrice = 1970;
+            itemPrice = 499;
           } else if (packSize === 2) {
-            itemPrice = 3690;
+            itemPrice = 949;
           } else if (packSize === 5) {
-            itemPrice = 8450;
+            itemPrice = 2299;
           }
         }
 
