@@ -1546,3 +1546,107 @@ button, input, textarea, select {
 .typing-indicator-dots span:nth-child(1) { animation-delay: -0.32s; }
 .typing-indicator-dots span:nth-child(2) { animation-delay: -0.16s; }
 .typing-indicator-dots span:nth-child(3) { animation-delay: 0s; }
+
+/* ── COMING SOON TEA SECTION ── */
+.tea-section {
+  padding: 5rem 0;
+  background-color: var(--bg-secondary);
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.tea-container {
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tea-icon {
+  margin-bottom: 1.5rem;
+  color: var(--color-primary);
+  opacity: 0.85;
+}
+
+.tea-title {
+  font-size: 2.2rem;
+  color: var(--color-primary);
+  margin-bottom: 0.75rem;
+}
+
+.tea-subtitle {
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  margin-bottom: 2.5rem;
+}
+
+.tea-form {
+  display: flex;
+  width: 100%;
+  max-width: 480px;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.tea-input {
+  flex: 1;
+  padding: 0.85rem 1.25rem;
+  border: 1px solid rgba(28, 53, 45, 0.15);
+  background-color: var(--color-white);
+  color: var(--color-text-main);
+  border-radius: var(--radius-sm);
+  outline: none;
+  font-size: 0.95rem;
+}
+
+.tea-input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(28, 53, 45, 0.05);
+}
+
+.tea-btn {
+  padding: 0.85rem 2rem;
+  background-color: var(--color-primary);
+  color: var(--bg-primary);
+  border: none;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: var(--transition-smooth);
+}
+
+.tea-btn:hover {
+  background-color: var(--color-primary-light);
+  transform: translateY(-1px);
+}
+
+.tea-disclaimer {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+}
+
+.tea-bg-motif {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: rgba(28, 53, 45, 0.025);
+  pointer-events: none;
+  z-index: 1;
+}
+
+@media (max-width: 576px) {
+  .tea-form {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .tea-btn {
+    width: 100%;
+  }
+}

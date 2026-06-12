@@ -13,9 +13,9 @@ export default function Home({ setActivePage }) {
         <div style={styles.heroOverlay}></div>
         <div className="container" style={styles.heroContent}>
           <span style={styles.heroKicker}>Nature's Sweetest Ritual</span>
-          <h1 className="hero-title">A Wellness Brand inspired by the forests of Northeast India</h1>
+          <h1 className="hero-title">A Wellness Brand rooted in the ancient forests of Central India</h1>
           <p style={styles.heroText}>
-            Built on the belief that nature already provides what modern life often lacks — simplicity, balance, and nourishment.
+            From the tribal heartlands of Odisha and Jharkhand — raw, unaltered, and harvested with respect.
           </p>
           <div style={styles.heroBtns}>
             <button className="btn btn-accent" onClick={() => handleNav('product')}>
@@ -86,7 +86,7 @@ export default function Home({ setActivePage }) {
             <div style={styles.ritualCard}>
               <div style={styles.ritualNum}>04</div>
               <h3 style={styles.ritualTitle}>Stay Connected to Nature</h3>
-              <p style={styles.ritualText}>Time spent outdoors re-aligns your nervous system. Walk in the park, breathe the pine, feel the soil.</p>
+              <p style={styles.ritualText}>Time spent outdoors re-aligns your nervous system. Walk in the park, breathe the wild orchids of the Eastern Ghats, feel the soil.</p>
             </div>
           </div>
         </div>
@@ -99,7 +99,7 @@ export default function Home({ setActivePage }) {
             <span style={styles.teaserKicker}>Behind the Brand</span>
             <h2 style={styles.teaserTitle}>Meet Aarini Devrani</h2>
             <p style={styles.teaserText}>
-              "Raised near the waterfalls and dense pine forests of Northeast India, I learned early that health is not built through shortcuts. It is built through small daily practices—morning movement, time outdoors, and mindful nutrition."
+              "Raised near the waterfalls and dense sal forests of Central Indian wild forests, I learned early that health is not built through shortcuts. It is built through small daily practices—morning movement, time outdoors, and mindful nutrition."
             </p>
             <p style={styles.teaserText}>
               Aariniya represents a return to that simplicity. By partnering with tribal honey collectors and local organic growers, we invite you to take a breath, slow down, and integrate pure, forest-sourced nutrition into your life.
@@ -128,6 +128,33 @@ export default function Home({ setActivePage }) {
             "Nature works best when left close to its original form. Simple actions repeated consistently create meaningful, long-term change."
           </blockquote>
           <cite style={styles.cite}>— The Aariniya Philosophy</cite>
+        </div>
+      </section>
+
+      {/* Coming Next — Forest Glow Herbal Tea */}
+      <section className="tea-section">
+        <div className="tea-bg-motif">
+          <Leaf size={320} />
+        </div>
+        <div className="container tea-container">
+          <Leaf size={32} className="tea-icon" />
+          <h2 className="tea-title">Coming Next — Forest Glow Herbal Tea</h2>
+          <p className="tea-subtitle">
+            Aarini's second ritual. Crafted from six Ayurvedic herbs. Launching soon.
+          </p>
+          <form 
+            className="tea-form" 
+            onSubmit={(e) => { e.preventDefault(); alert("You will be notified as soon as Forest Glow Herbal Tea launches! 🌿"); e.target.reset(); }}
+          >
+            <input 
+              type="email" 
+              placeholder="Enter your email to get early access" 
+              className="tea-input"
+              required 
+            />
+            <button type="submit" className="tea-btn">Notify Me</button>
+          </form>
+          <p className="tea-disclaimer">No spam. Just one email when it launches.</p>
         </div>
       </section>
     </div>

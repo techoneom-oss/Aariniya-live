@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Star, ShieldCheck, Plus, Minus, Check, MessageSquare, ChevronDown, ChevronUp } from 'lucide-react';
+import { Plus, Minus, Check, ChevronDown, ChevronUp } from 'lucide-react';
 import { API_BASE_URL } from '../config';
 
 export default function ProductDetail({ onAddToCart }) {
@@ -62,9 +62,8 @@ export default function ProductDetail({ onAddToCart }) {
     finally { setSubmittingReview(false); }
   };
 
-  const toggleAccordion = (index) => setActiveAccordion(activeAccordion === index ? null : index);
-  const currentPrice = selectedPack === 1 ? 1970 : (selectedPack === 2 ? 3690 : 8450);
-  const currentOriginalPrice = selectedPack === 1 ? 2400 : (selectedPack === 2 ? 4800 : 12000);
+  const currentPrice = selectedPack === 1 ? 499 : (selectedPack === 2 ? 949 : 2299);
+  const currentOriginalPrice = selectedPack === 1 ? 1970 : (selectedPack === 2 ? 3940 : 9850);
   const discountPct = Math.round(((currentOriginalPrice - currentPrice) / currentOriginalPrice) * 100);
 
   const handlePackChange = (pack) => { setSelectedPack(pack); setActiveImage(getProductPackImage(pack)); setImageLoaded(false); };
@@ -139,28 +138,37 @@ export default function ProductDetail({ onAddToCart }) {
           <h1 className="pd-title">{product.name}</h1>
           <p className="pd-subtitle">{product.subtitle}</p>
 
-          {/* Rating */}
-          <button
-            className="pd-rating-row"
-            onClick={() => document.getElementById('reviews-section')?.scrollIntoView({ behavior: 'smooth' })}
-          >
-            <span className="pd-stars">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} size={14} fill={i < Math.round(Number(averageRating)) ? 'var(--color-accent)' : 'none'} stroke={i < Math.round(Number(averageRating)) ? 'var(--color-accent)' : 'var(--color-text-muted)'} />
-              ))}
-            </span>
-            <span className="pd-rating-text">{averageRating} ({totalReviewsCount} Verified Reviews)</span>
-          </button>
-
           {/* Price */}
           <div className="pd-price-box">
             <div className="pd-price-label">PRICE</div>
             <div className="pd-price-row">
               <span className="pd-mrp">M.R.P. <s>₹{currentOriginalPrice.toLocaleString()}</s></span>
               <span className="pd-price">₹{currentPrice.toLocaleString()}</span>
-              <span className="pd-badge-off">{discountPct}% Off</span>
+              <span className="pd-badge-off" style={{ backgroundColor: 'var(--color-accent)', color: 'var(--color-primary)' }}>Founder's Launch Price</span>
             </div>
             <p className="pd-tax">(incl. of all taxes)</p>
+            <p className="pd-batch-limit" style={{ color: 'var(--color-accent)', fontWeight: '600', fontSize: '0.88rem', marginTop: '6px' }}>
+              First harvest batch — only 100 jars available
+            </p>
+          </div>
+
+          {/* Description */}
+          <div className="pd-description-section" style={{ margin: '1.5rem 0' }}>
+            <p style={{ fontSize: '0.95rem', lineHeight: '1.6', color: 'var(--color-text-main)', marginBottom: '0.75rem' }}>
+              Raw, unfiltered, and unpasteurized. Harvested by tribal communities from the sal and mahua forests of Odisha and Jharkhand — one of India's most biodiverse forest corridors.
+            </p>
+            <p style={{ fontSize: '0.95rem', lineHeight: '1.6', color: 'var(--color-text-main)' }}>
+              No heat treatment. No added sugar. No blending from unknown sources. Every jar carries the natural pollen, enzymes, and micronutrients of a thousand wild forest flowers.
+            </p>
+          </div>
+
+          {/* Trust badges row */}
+          <div className="pd-trust-strip" style={{ marginBottom: '1.5rem' }}>
+            <div className="pd-trust-item"><Check size={14} /><span>FSSAI Compliant</span></div>
+            <div className="pd-trust-item"><Check size={14} /><span>100% Pure</span></div>
+            <div className="pd-trust-item"><Check size={14} /><span>No Added Sugar</span></div>
+            <div className="pd-trust-item"><Check size={14} /><span>Cold-Filled</span></div>
+            <div className="pd-trust-item"><Check size={14} /><span>Small Batch</span></div>
           </div>
 
           {/* Offers strip */}
@@ -174,9 +182,9 @@ export default function ProductDetail({ onAddToCart }) {
             <p className="pd-section-label">Select Pack Quantity</p>
             <div className="pd-pack-options">
               {[
-                { pack: 1, label: '1 Jar', price: '₹1,970', save: null },
-                { pack: 2, label: '2 Jars', price: '₹3,690', save: 'Save 6%' },
-                { pack: 5, label: '5 Jars', price: '₹8,450', save: 'Save 14%' },
+                { pack: 1, label: '1 Jar', price: '₹499', save: null },
+                { pack: 2, label: '2 Jars', price: '₹949', save: 'Save ₹49' },
+                { pack: 5, label: '5 Jars', price: '₹2,299', save: 'Save ₹196' },
               ].map(({ pack, label, price, save }) => (
                 <button
                   key={pack}
@@ -221,13 +229,7 @@ export default function ProductDetail({ onAddToCart }) {
             </button>
           </div>
 
-          {/* Trust badges */}
-          <div className="pd-trust-strip">
-            <div className="pd-trust-item"><ShieldCheck size={15} /><span>100% Pure</span></div>
-            <div className="pd-trust-item"><Check size={15} /><span>Unfiltered</span></div>
-            <div className="pd-trust-item"><Check size={15} /><span>Small Batch</span></div>
-            <div className="pd-trust-item"><Check size={15} /><span>Premium Glass</span></div>
-          </div>
+          {/* Trust badges moved below description */}
 
           {/* Accordions */}
           <div className="pd-accordions">
@@ -295,119 +297,10 @@ export default function ProductDetail({ onAddToCart }) {
 
       {/* ── REVIEWS SECTION ─────────────────────────────── */}
       <section id="reviews-section" className="pd-reviews-section">
-        <div className="container">
-          <h2 className="pd-reviews-title">Customer Reviews</h2>
-
-          {/* Summary box */}
-          <div className="pd-review-summary">
-            <div className="pd-review-avg">
-              <div className="pd-stars pd-stars-lg">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} size={20} fill={i < Math.round(Number(averageRating)) ? 'var(--color-accent)' : 'none'} stroke={i < Math.round(Number(averageRating)) ? 'var(--color-accent)' : 'var(--color-text-muted)'} />
-                ))}
-              </div>
-              <div className="pd-avg-num">{averageRating} <span>out of 5</span></div>
-              <div className="pd-avg-count">Based on {totalReviewsCount} reviews</div>
-            </div>
-
-            <div className="pd-review-bars">
-              {[5, 4, 3, 2, 1].map(stars => {
-                const count = starsBreakdown[stars] || 0;
-                const pct = totalReviewsCount > 0 ? (count / totalReviewsCount) * 100 : 0;
-                return (
-                  <div key={stars} className="pd-bar-row">
-                    <span className="pd-bar-label">{stars}★</span>
-                    <div className="pd-bar-bg"><div className="pd-bar-fill" style={{ width: `${pct}%` }} /></div>
-                    <span className="pd-bar-count">{count}</span>
-                  </div>
-                );
-              })}
-            </div>
-
-            <div className="pd-review-cta">
-              <button className="pd-write-btn" onClick={() => setShowReviewForm(v => !v)}>
-                {showReviewForm ? 'Cancel' : 'Write a Review'}
-              </button>
-            </div>
-          </div>
-
-          {/* Review form */}
-          {showReviewForm && (
-            <div className="pd-review-form-card">
-              <h3 className="pd-form-title"><MessageSquare size={16} /> Share Your Experience</h3>
-              {reviewSuccess ? (
-                <div className="pd-success-msg"><Check size={18} /> Thank you! Your review has been submitted.</div>
-              ) : (
-                <form onSubmit={handleReviewSubmit}>
-                  <div className="pd-form-row">
-                    <div className="form-group">
-                      <label className="form-label">Your Name</label>
-                      <input type="text" className="form-input" placeholder="e.g. Priya Sharma" value={newReview.name} onChange={e => setNewReview({ ...newReview, name: e.target.value })} required />
-                    </div>
-                    <div className="form-group">
-                      <label className="form-label">Review Title</label>
-                      <input type="text" className="form-input" placeholder="e.g. Excellent honey!" value={newReview.title} onChange={e => setNewReview({ ...newReview, title: e.target.value })} required />
-                    </div>
-                    <div className="form-group pd-form-rating">
-                      <label className="form-label">Rating</label>
-                      <select className="form-input" value={newReview.rating} onChange={e => setNewReview({ ...newReview, rating: Number(e.target.value) })}>
-                        <option value="5">5 Stars ⭐⭐⭐⭐⭐</option>
-                        <option value="4">4 Stars ⭐⭐⭐⭐</option>
-                        <option value="3">3 Stars ⭐⭐⭐</option>
-                        <option value="2">2 Stars ⭐⭐</option>
-                        <option value="1">1 Star ⭐</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div className="form-group">
-                    <label className="form-label">Your Review</label>
-                    <textarea className="form-input" rows="3" placeholder="Share your experience (texture, aroma, wellness results...)" value={newReview.text} onChange={e => setNewReview({ ...newReview, text: e.target.value })} required style={{ resize: 'vertical' }} />
-                  </div>
-                  <div className="form-group">
-                    <label className="form-label">Tags (Optional, comma-separated)</label>
-                    <input type="text" className="form-input" placeholder="pure, thick, floral" value={newReview.tags} onChange={e => setNewReview({ ...newReview, tags: e.target.value })} />
-                  </div>
-                  <div className="pd-form-actions">
-                    <button type="submit" className="btn btn-primary" disabled={submittingReview}>{submittingReview ? 'Publishing...' : 'Publish Review'}</button>
-                    <button type="button" className="btn btn-secondary" onClick={() => setShowReviewForm(false)}>Cancel</button>
-                  </div>
-                </form>
-              )}
-            </div>
-          )}
-
-          {/* Reviews list */}
-          <div className="pd-reviews-list">
-            {reviews.length === 0 && (
-              <p style={{ color: 'var(--color-text-muted)', textAlign: 'center', padding: '2rem 0' }}>No written reviews yet. Be the first!</p>
-            )}
-            {reviews.map((r, idx) => (
-              <div key={r.id || idx} className="pd-review-card">
-                <div className="pd-rc-top">
-                  <div className="pd-stars">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} size={13} fill={i < r.rating ? 'var(--color-accent)' : 'none'} stroke={i < r.rating ? 'var(--color-accent)' : 'var(--color-text-muted)'} />
-                    ))}
-                  </div>
-                  <span className="pd-rc-date">{new Date(r.date).toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' })}</span>
-                </div>
-                <div className="pd-rc-author">
-                  <div className="pd-rc-avatar">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                  </div>
-                  <span className="pd-rc-name">{r.reviewer_name}</span>
-                  <span className="pd-rc-verified"><ShieldCheck size={10} /> Verified</span>
-                </div>
-                {r.title && <h4 className="pd-rc-title">{r.title}</h4>}
-                <p className="pd-rc-body">{r.review_text}</p>
-                {r.tags && r.tags.length > 0 && (
-                  <div className="pd-rc-tags">
-                    {r.tags.map((tag, ti) => <span key={ti} className="pd-rc-tag">#{tag}</span>)}
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
+        <div className="container" style={{ textAlign: 'center', padding: '4rem 0' }}>
+          <p style={{ color: 'var(--color-text-muted)', fontSize: '1rem', fontStyle: 'italic' }}>
+            Be the first to share your experience — early reviews coming soon from our founding batch customers.
+          </p>
         </div>
       </section>
     </div>

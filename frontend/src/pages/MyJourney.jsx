@@ -9,7 +9,7 @@ export default function MyJourney() {
           <span style={styles.kicker}>Meet the Founder — Aarini Devrani</span>
           <h1 style={styles.title}>The Forest is Our Compass</h1>
           <p style={styles.subtitle}>
-            How a childhood spent in the dense canopy of Northeast India inspired a return to raw wellness rituals.
+            How a childhood spent in the Simlipal biosphere forests of Odisha inspired a return to raw wellness rituals.
           </p>
         </div>
       </section>
@@ -18,7 +18,7 @@ export default function MyJourney() {
       <section style={styles.bannerSection}>
         <img 
           src="/assets/product_gallery_new_5.jpg" 
-          alt="Misty Forests of Northeast India" 
+          alt="Misty ancient forests of Odisha and Jharkhand" 
           style={styles.bannerImg}
         />
         <div style={styles.bannerCaption}>
@@ -31,12 +31,15 @@ export default function MyJourney() {
         <div className="container journey-grid">
           <div style={styles.textCol}>
             <div style={styles.chapterNum}>Chapter I</div>
-            <h2 style={styles.chapterTitle}>A Childhood in the Canopy</h2>
+            <h2 style={styles.chapterTitle}>Roots in the Forest Heartland</h2>
             <p style={styles.p}>
-              Growing up in the foothills of Northeast India, my backyard wasn’t a manicured lawn; it was a dense, living forest. I was raised in a world where the morning alarm was the call of wild hornbills, and the air carried the scent of wet pine, orchids, and wild ginger. My grandfather, a local elder who knew the language of the mountains, taught me early on that the forest is not something we visit—it is something we belong to.
+              Growing up in Odisha, my backyard was not a manicured lawn — it was the edge of something ancient. The forests near Simlipal, one of India's last true biospheres, shaped how I understood food, health, and time.
             </p>
             <p style={styles.p}>
-              I remember watching local honey hunters ascend massive trees, using only hand-woven hemp ropes and smoke to respectfully harvest small portions of wild honey. They never took more than the hive could spare. They believed the honey carried the spirit of the forest—the medicinal properties of a thousand wild flowers.
+              I remember watching local tribal communities harvest wild honey the way their ancestors did — by hand, by season, by trust. They never took more than the forest could spare. They believed the honey carried the memory of every flower the bees had visited.
+            </p>
+            <p style={styles.p}>
+              That belief stayed with me.
             </p>
           </div>
           <div style={styles.imageCol}>
@@ -55,7 +58,7 @@ export default function MyJourney() {
       <section style={styles.pullQuoteSection}>
         <div className="container" style={styles.pullQuoteContainer}>
           <p style={styles.pullQuoteText}>
-            "We had traded the slow, nourishing rhythms of nature for convenience and shortcuts. Aariniya began as a personal quest to reconnect with purity."
+            "The forest does not need improvement. It only needs to be listened to."
           </p>
         </div>
       </section>
@@ -64,16 +67,16 @@ export default function MyJourney() {
       <section style={{...styles.section, backgroundColor: '#ffffff'}}>
         <div className="container journey-grid-reversed">
           <div style={styles.textCol}>
-            <div style={styles.chapterNum}>Chapter II & III</div>
-            <h2 style={styles.chapterTitle}>The Modern Disconnect & Returning to the Source</h2>
+            <div style={styles.chapterNum}>Chapter II</div>
+            <h2 style={styles.chapterTitle}>The Modern Disconnect</h2>
             <p style={styles.p}>
-              When I left the forests to pursue my education and career in the city, I felt an immediate and deep disconnect. The air was heavy, life was rushed, and "wellness" was sold in plastic bottles, packed with artificial ingredients and high-pressure marketing. My energy levels plummeted, my skin lost its glow, and my mind was constantly cluttered.
+              When I moved to the city, I searched for that same purity. What I found instead was processed honey from unknown sources, stripped of its natural enzymes and pollen.
             </p>
             <p style={styles.p}>
-              I began looking for the pure ingredients of my childhood, but all I found was highly processed, pasteurized honey, blended from unknown sources and stripped of its natural pollen and beneficial enzymes.
+              In 2024, I went back. I spent months reconnecting with tribal harvesting communities across Odisha and Jharkhand — the Simlipal belt, the Chota Nagpur forests. I wanted to bring what they preserved directly to you, without altering its form.
             </p>
             <p style={styles.p}>
-              In 2024, I decided to go back. I spent months traveling through the dense forest valleys, reconnecting with the tribal harvesting communities. I wanted to bring the raw, authentic wellness of the forest to the modern world, without altering its form. That was how Aariniya was born.
+              That was how AARINIYA began.
             </p>
           </div>
           <div style={styles.imageCol}>
@@ -92,13 +95,13 @@ export default function MyJourney() {
       <section style={styles.journalSection}>
         <div className="container">
           <h2 style={styles.journalTitle}>Forest Visual Journal</h2>
-          <p style={styles.journalSub}>Glimpses of Northeast India's pristine ecosystems, harvesting traditions, and ceremonies.</p>
+          <p style={styles.journalSub}>Glimpses of Central Indian wild forests' pristine ecosystems, harvesting traditions, and ceremonies.</p>
           <div className="journey-journal-grid">
             <div className="journal-card journey-journal-card">
               <img src="/assets/aarini_devrani_5.jpg" alt="Aarini Devrani Ceremonial Attire" style={styles.journalImg} />
               <div style={styles.journalCardOverlay}>
                 <span style={styles.journalCardKicker}>Ceremony</span>
-                <h4 style={styles.journalCardTitle}>Traditional Northeast Ceremonial Attire</h4>
+                <h4 style={styles.journalCardTitle}>Traditional Central Indian Ceremonial Attire</h4>
               </div>
             </div>
             <div className="journal-card journey-journal-card">
@@ -153,7 +156,7 @@ export default function MyJourney() {
             <div style={styles.valueCard}>
               <ShieldCheck size={32} color="var(--color-accent)" style={{ marginBottom: '1rem' }} />
               <h3 style={styles.valueName}>Authentic Partnerships</h3>
-              <p style={styles.valueDesc}>We support local tribal collectors in the Northeast, ensuring ethical wages and forest preservation.</p>
+              <p style={styles.valueDesc}>We support local tribal collectors in Central India, ensuring ethical wages and forest preservation.</p>
             </div>
             <div style={styles.valueCard}>
               <HeartPulse size={32} color="var(--color-accent)" style={{ marginBottom: '1rem' }} />

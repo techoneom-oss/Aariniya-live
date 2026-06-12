@@ -157,6 +157,76 @@ function initializeDatabase() {
 function seedProducts() {
   db.get("SELECT COUNT(*) as count FROM products", (err, row) => {
     if (err) return console.error(err);
+
+    const description = "Raw, unfiltered, and unpasteurized. Harvested by tribal communities from the sal and mahua forests of Odisha and Jharkhand — one of India's most biodiverse forest corridors. No heat treatment. No added sugar. No blending from unknown sources. Every jar carries the natural pollen, enzymes, and micronutrients of a thousand wild forest flowers.";
+    const short_desc = "Raw Forest Honey | Small Batch Packed | Premium Glass Jar | 900g";
+    const price = 499;
+    const original_price = 1970;
+
+    const highlights = [
+      "Deep Forest Sourced",
+      "Raw Multifloral Honey",
+      "Small Batch Packed",
+      "Premium Glass Jar Packaging",
+      "Rich Natural Aroma",
+      "Distinctive Forest Flavor",
+      "Carefully Selected",
+      "Daily Wellness Ritual",
+      "No Added Sugar",
+      "No Artificial Flavors",
+      "Crafted With Care"
+    ];
+
+    const tasteProfile = {
+      flavor: "Rich, smooth, naturally sweet",
+      aroma: "Deep floral and forest notes",
+      texture: "Golden, thick, and luxurious",
+      source: "Multifloral forest nectar"
+    };
+
+    const waysToEnjoy = [
+      "Morning warm water ritual",
+      "Herbal tea and green tea",
+      "Smoothies and wellness drinks",
+      "Breakfast bowls",
+      "Toast and pancakes",
+      "Healthy recipes",
+      "Natural sweetening alternative"
+    ];
+
+    const details = {
+      brand: "AARINIYA",
+      product_name: "Deep Forest Multifloral Honey",
+      net_weight: "900g",
+      packaging: "Premium Glass Jar",
+      honey_type: "Raw Multifloral Honey",
+      origin: "Odisha & Jharkhand forests, India",
+      storage: "Store in a cool and dry place. Keep lid tightly closed after use."
+    };
+
+    const whoIsItFor = [
+      "Health-conscious individuals",
+      "Families",
+      "Fitness enthusiasts",
+      "Wellness seekers",
+      "Nature lovers",
+      "Daily honey users",
+      "Tea and herbal drink enthusiasts"
+    ];
+
+    const images = [
+      "/assets/product_clean_shot.jpg",         // 1. Clean studio hero shot
+      "/assets/product_jar_forest.jpg",          // 2. Forest setting — origin
+      "/assets/product_founder_jar.jpg",         // 3. Founder holding jar — brand story
+      "/assets/product_morning.jpg",             // 4. Morning ritual lifestyle
+      "/assets/product_gift_box.jpg",            // 5. Premium packaging unboxing
+      "/assets/product_wellbeing_triptych.jpg",  // 6. Yoga + jar + honey triptych
+      "/assets/product_rituals.jpg",             // 7. One Spoon Many Rituals
+      "/assets/product_wellness_blueprint.jpg",  // 8. Nature's Wellness Blueprint
+      "/assets/product_comparison.jpg",          // 9. The Difference You Can Taste
+      "/assets/product_forest_to_home.jpg"       // 10. From Deep Forests to Your Home
+    ];
+
     if (row.count === 0) {
       const stmt = db.prepare(`
         INSERT INTO products (
@@ -165,77 +235,13 @@ function seedProducts() {
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       `);
 
-      const highlights = [
-        "Deep Forest Sourced",
-        "Multifloral Forest Honey",
-        "Small Batch Packed",
-        "Premium Glass Jar Packaging",
-        "Rich Natural Aroma",
-        "Distinctive Forest Flavor",
-        "Carefully Selected",
-        "Daily Wellness Ritual",
-        "No Added Sugar",
-        "No Artificial Flavors",
-        "Crafted With Care"
-      ];
-
-      const tasteProfile = {
-        flavor: "Rich, smooth, naturally sweet",
-        aroma: "Deep floral and forest notes",
-        texture: "Golden, thick, and luxurious",
-        source: "Multifloral forest nectar"
-      };
-
-      const waysToEnjoy = [
-        "Morning warm water ritual",
-        "Herbal tea and green tea",
-        "Smoothies and wellness drinks",
-        "Breakfast bowls",
-        "Toast and pancakes",
-        "Healthy recipes",
-        "Natural sweetening alternative"
-      ];
-
-      const details = {
-        brand: "AARINIYA",
-        product_name: "Deep Forest Multifloral Honey",
-        net_weight: "900g",
-        packaging: "Premium Glass Jar",
-        honey_type: "Multifloral Forest Honey",
-        origin: "Forest Regions of India",
-        storage: "Store in a cool and dry place. Keep lid tightly closed after use."
-      };
-
-      const whoIsItFor = [
-        "Health-conscious individuals",
-        "Families",
-        "Fitness enthusiasts",
-        "Wellness seekers",
-        "Nature lovers",
-        "Daily honey users",
-        "Tea and herbal drink enthusiasts"
-      ];
-
-      const images = [
-        "/assets/product_clean_shot.jpg",         // 1. Clean studio hero shot
-        "/assets/product_jar_forest.jpg",          // 2. Forest setting — origin
-        "/assets/product_founder_jar.jpg",         // 3. Founder holding jar — brand story
-        "/assets/product_morning.jpg",             // 4. Morning ritual lifestyle
-        "/assets/product_gift_box.jpg",            // 5. Premium packaging unboxing
-        "/assets/product_wellbeing_triptych.jpg",  // 6. Yoga + jar + honey triptych
-        "/assets/product_rituals.jpg",             // 7. One Spoon Many Rituals
-        "/assets/product_wellness_blueprint.jpg",  // 8. Nature's Wellness Blueprint
-        "/assets/product_comparison.jpg",          // 9. The Difference You Can Taste
-        "/assets/product_forest_to_home.jpg"       // 10. From Deep Forests to Your Home
-      ];
-
       stmt.run(
         "AARINIYA Deep Forest Multifloral Honey",
-        "Raw Forest Honey | Small Batch Packed | Premium Glass Jar | 900g",
-        "Harvested from diverse forest ecosystems and carefully packed in small batches, AARINIYA Deep Forest Multifloral Honey brings the richness of nature to your daily wellness ritual. Known for its rich aroma, golden texture, and distinctive forest character, every jar reflects the diversity of natural floral sources and the authenticity of forest harvesting traditions.",
-        "AARINIYA Deep Forest Honey begins its journey in naturally rich forest regions where bees gather nectar from a wide variety of wild flowers and plants. This diversity creates honey with a unique aroma, character, and flavour profile that cannot be replicated. Carefully selected and packed in small batches, every jar represents our commitment to authenticity, quality, and respect for nature. More than a sweetener, it is a simple daily ritual inspired by the forest.",
-        1970,
-        2400,
+        short_desc,
+        description,
+        description,
+        price,
+        original_price,
         JSON.stringify(highlights),
         JSON.stringify(tasteProfile),
         JSON.stringify(waysToEnjoy),
@@ -248,6 +254,30 @@ function seedProducts() {
         }
       );
       stmt.finalize();
+    } else {
+      // Dynamic update to ensure existing database reflects the launch updates
+      db.run(`
+        UPDATE products SET 
+          subtitle = ?,
+          short_description = ?,
+          description = ?,
+          price = ?,
+          original_price = ?,
+          details = ?,
+          images = ?
+        WHERE id = 1
+      `, [
+        short_desc,
+        description,
+        description,
+        price,
+        original_price,
+        JSON.stringify(details),
+        JSON.stringify(images)
+      ], (updateErr) => {
+        if (updateErr) console.error("Error updating product 1:", updateErr);
+        else console.log("Successfully updated product 1 with Central India details.");
+      });
     }
   });
 }

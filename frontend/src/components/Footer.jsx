@@ -13,7 +13,7 @@ export default function Footer({ setActivePage }) {
         <div style={styles.brandCol}>
           <h3 style={styles.logo}>AARINIYA</h3>
           <p style={styles.mission}>
-            Harvesting pure, raw forest products inspired by the natural richness and traditional wisdom of Northeast India.
+            Harvesting pure, raw forest products inspired by the natural richness and traditional wisdom of Central Indian wild forests.
           </p>
           <div style={styles.promiseBox}>
             <span style={styles.promiseTitle}>Our Promise:</span>
@@ -36,6 +36,11 @@ export default function Footer({ setActivePage }) {
         <div>
           <h4 style={styles.heading}>Connect</h4>
           <p style={styles.text}>Aariniya Wellness</p>
+          <p style={styles.text}>
+            <a href="https://www.instagram.com/aarinidevrani" target="_blank" rel="noopener noreferrer" style={{ color: '#a9b9b3', textDecoration: 'none' }} className="hover-gold">
+              Follow Aarini @aarinidevrani
+            </a>
+          </p>
         </div>
 
         {/* Newsletter Column */}
@@ -56,7 +61,10 @@ export default function Footer({ setActivePage }) {
 
       <div style={styles.bottom}>
         <div className="container" style={styles.bottomContainer}>
-          <p style={styles.copy}>© {new Date().getFullYear()} AARINIYA Wellness. All rights reserved.</p>
+          <div>
+            <p style={styles.copy}>© {new Date().getFullYear()} AARINIYA Wellness. All rights reserved.</p>
+            <p style={{ ...styles.copy, marginTop: '4px' }}>Sourced from Odisha & Jharkhand | Shipped across India</p>
+          </div>
           <div style={styles.footerLinks}>
             <span style={styles.footerLink}>Privacy Policy</span>
             <span style={styles.footerLink}>Terms of Service</span>
