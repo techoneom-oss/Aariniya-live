@@ -3,9 +3,40 @@ import { Calendar, Sparkles } from 'lucide-react';
 import { API_BASE_URL } from '../config';
 
 export default function Courses({ onEnrollCourse }) {
-  const [courses, setCourses] = useState([]);
+  const [courses, setCourses] = useState([
+    {
+      id: 1,
+      title: "Forest Morning Yoga Flow",
+      subtitle: "21-Day Guided Vinyasa for Strength & Mindful Living",
+      description: "Connect your body with the rhythm of the forest. This yoga course brings dynamic movements, deep stretches, and mindful breathing protocols to kickstart your day with high energy and calm focus.",
+      price: 1999,
+      type: "yoga",
+      duration: "21 Days (30-min daily sessions)",
+      image: "/assets/course_yoga_morning.png"
+    },
+    {
+      id: 2,
+      title: "Deep Breathing & Meditation Rituals",
+      subtitle: "Mastering Pranayama and Stress Release",
+      description: "Stressed and overwhelmed by modern city pace? Learn deep breathing techniques inspired by the natural serenity of mountains and forests to calm the nervous system and boost immune system functioning.",
+      price: 999,
+      type: "yoga",
+      duration: "10 Days (15-min daily sessions)",
+      image: "/assets/course_yoga_breathing.png"
+    },
+    {
+      id: 3,
+      title: "The Aariniya Whole-Foods Diet Plan",
+      subtitle: "A Complete Guide to Mindful Nutrition & Natural Sweeteners",
+      description: "A comprehensive diet protocol focusing on unprocessed whole foods, anti-inflammatory forest ingredients, and elimination of refined sugar. Includes meal plans, herbal recipes, and honey-based wellness drinks.",
+      price: 1499,
+      type: "diet",
+      duration: "4-Week Plan & Recipe Guide",
+      image: "/assets/course_diet_plan.png"
+    }
+  ]);
   const [filter, setFilter] = useState('all');
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const fetchCourses = async () => {
     try {

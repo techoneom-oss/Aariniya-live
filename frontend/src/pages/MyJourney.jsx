@@ -98,42 +98,42 @@ export default function MyJourney() {
           <p style={styles.journalSub}>Glimpses of Central Indian wild forests' pristine ecosystems, harvesting traditions, and ceremonies.</p>
           <div className="journey-journal-grid">
             <div className="journal-card journey-journal-card">
-              <img src="/assets/aarini_devrani_5.jpg" alt="Aarini Devrani Ceremonial Attire" style={styles.journalImg} />
+              <img src="/assets/aarini_devrani_5.jpg" alt="Aarini Devrani Ceremonial Attire" style={styles.journalImg} loading="lazy" />
               <div style={styles.journalCardOverlay}>
                 <span style={styles.journalCardKicker}>Ceremony</span>
                 <h4 style={styles.journalCardTitle}>Traditional Central Indian Ceremonial Attire</h4>
               </div>
             </div>
             <div className="journal-card journey-journal-card">
-              <img src="/assets/aarini_devrani_1.jpg" alt="Aarini Devrani Packing Honey" style={styles.journalImg} />
+              <img src="/assets/aarini_devrani_1.jpg" alt="Aarini Devrani Packing Honey" style={styles.journalImg} loading="lazy" />
               <div style={styles.journalCardOverlay}>
                 <span style={styles.journalCardKicker}>Process</span>
                 <h4 style={styles.journalCardTitle}>Small Batch Quality Control</h4>
               </div>
             </div>
             <div className="journal-card journey-journal-card">
-              <img src="/assets/aarini_devrani_2.jpg" alt="Aarini Devrani in Nature" style={styles.journalImg} />
+              <img src="/assets/aarini_devrani_2.jpg" alt="Aarini Devrani in Nature" style={styles.journalImg} loading="lazy" />
               <div style={styles.journalCardOverlay}>
                 <span style={styles.journalCardKicker}>Connection</span>
                 <h4 style={styles.journalCardTitle}>Daily Forest Ritual Walk</h4>
               </div>
             </div>
             <div className="journal-card journey-journal-card">
-              <img src="/assets/aarini_devrani_3.jpg" alt="Aarini Devrani Forest Story" style={styles.journalImg} />
+              <img src="/assets/aarini_devrani_3.jpg" alt="Aarini Devrani Forest Story" style={styles.journalImg} loading="lazy" />
               <div style={styles.journalCardOverlay}>
                 <span style={styles.journalCardKicker}>Roots</span>
                 <h4 style={styles.journalCardTitle}>A Childhood in the Foothills</h4>
               </div>
             </div>
             <div className="journal-card journey-journal-card">
-              <img src="/assets/aarini_devrani_4.jpg" alt="Aarini Devrani Authentic Wellness" style={styles.journalImg} />
+              <img src="/assets/aarini_devrani_4.jpg" alt="Aarini Devrani Authentic Wellness" style={styles.journalImg} loading="lazy" />
               <div style={styles.journalCardOverlay}>
                 <span style={styles.journalCardKicker}>Philosophy</span>
                 <h4 style={styles.journalCardTitle}>Mindful Wellness Lifestyle</h4>
               </div>
             </div>
             <div className="journal-card journey-journal-card">
-              <img src="/assets/product_gallery_new_4.jpg" alt="Beekeeping Harvest" style={styles.journalImg} />
+              <img src="/assets/product_gallery_new_4.jpg" alt="Beekeeping Harvest" style={styles.journalImg} loading="lazy" />
               <div style={styles.journalCardOverlay}>
                 <span style={styles.journalCardKicker}>Harvest</span>
                 <h4 style={styles.journalCardTitle}>Respectful Wild Hive Harvesting</h4>

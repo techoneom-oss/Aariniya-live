@@ -3,9 +3,70 @@ import { Plus, Minus, Check, ChevronDown, ChevronUp } from 'lucide-react';
 import { API_BASE_URL } from '../config';
 
 export default function ProductDetail({ onAddToCart }) {
-  const [product, setProduct] = useState(null);
+  const [product, setProduct] = useState({
+    id: 1,
+    name: "AARINIYA Deep Forest Multifloral Honey",
+    subtitle: "Raw Forest Honey | Small Batch Packed | Premium Glass Jar | 900g",
+    short_description: "Raw, unfiltered, and unpasteurized. Harvested by tribal communities from the sal and mahua forests of Odisha and Jharkhand — one of India's most biodiverse forest corridors. No heat treatment. No added sugar. No blending from unknown sources. Every jar carries the natural pollen, enzymes, and micronutrients of a thousand wild forest flowers.",
+    description: "Raw, unfiltered, and unpasteurized. Harvested by tribal communities from the sal and mahua forests of Odisha and Jharkhand — one of India's most biodiverse forest corridors. No heat treatment. No added sugar. No blending from unknown sources. Every jar carries the natural pollen, enzymes, and micronutrients of a thousand wild forest flowers.",
+    price: 499,
+    original_price: 1970,
+    inventory: 100,
+    images: [
+      "/assets/product_qty_1.jpg",
+      "/assets/product_qty_2.jpg",
+      "/assets/product_qty_5.jpg",
+      "/assets/product_clean_shot.jpg",
+      "/assets/product_jar_forest.jpg",
+      "/assets/product_founder_jar.jpg",
+      "/assets/product_morning.jpg",
+      "/assets/product_gift_box.jpg",
+      "/assets/product_wellbeing_triptych.jpg",
+      "/assets/product_rituals.jpg",
+      "/assets/product_wellness_blueprint.jpg",
+      "/assets/product_comparison.jpg",
+      "/assets/product_forest_to_home.jpg"
+    ],
+    highlights: [
+      "Deep Forest Sourced",
+      "Raw Multifloral Honey",
+      "Small Batch Packed",
+      "Premium Glass Jar Packaging",
+      "Rich Natural Aroma",
+      "Distinctive Forest Flavor",
+      "Carefully Selected",
+      "Daily Wellness Ritual",
+      "No Added Sugar",
+      "No Artificial Flavors",
+      "Crafted With Care"
+    ],
+    taste_profile: {
+      flavor: "Rich, smooth, naturally sweet",
+      aroma: "Deep floral and forest notes",
+      texture: "Golden, thick, and luxurious",
+      source: "Raw Multifloral Honey"
+    },
+    ways_to_enjoy: [
+      "Morning warm water ritual",
+      "Herbal tea and green tea",
+      "Smoothies and wellness drinks",
+      "Breakfast bowls",
+      "Toast and pancakes",
+      "Healthy recipes",
+      "Natural sweetening alternative"
+    ],
+    details: {
+      brand: "AARINIYA",
+      product_name: "Deep Forest Multifloral Honey",
+      net_weight: "900g",
+      packaging: "Premium Glass Jar",
+      honey_type: "Raw Multifloral Honey",
+      origin: "Odisha & Jharkhand forests, India",
+      storage: "Store in a cool and dry place. Keep lid tightly closed after use."
+    }
+  });
   const [reviews, setReviews] = useState([]);
-  const [activeImage, setActiveImage] = useState('');
+  const [activeImage, setActiveImage] = useState('/assets/product_qty_1.jpg');
   const [quantity, setQuantity] = useState(1);
   const [activeAccordion, setActiveAccordion] = useState(null);
   const [selectedPack, setSelectedPack] = useState(1);
@@ -29,7 +90,7 @@ export default function ProductDetail({ onAddToCart }) {
       if (!res.ok) throw new Error('Product not found');
       const data = await res.json();
       setProduct(data);
-      setActiveImage(getProductPackImage(1));
+      setActiveImage(getProductPackImage(selectedPack));
       const reviewsRes = await fetch(`${API_BASE_URL}/api/reviews/1`);
       if (reviewsRes.ok) setReviews(await reviewsRes.json());
     } catch (err) {

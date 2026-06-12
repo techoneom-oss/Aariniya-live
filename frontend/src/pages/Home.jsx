@@ -37,6 +37,7 @@ export default function Home({ setActivePage }) {
               src="/assets/product_jar_forest.jpg" 
               alt="Aariniya Deep Forest Honey Jar" 
               style={styles.teaserImage}
+              loading="lazy"
             />
             <div style={styles.badge}>Best Seller</div>
           </div>
@@ -114,6 +115,7 @@ export default function Home({ setActivePage }) {
                 src="/assets/product_gallery_new_3.jpg" 
                 alt="Aarini Devrani morning wellness ritual" 
                 style={styles.founderImage}
+                loading="lazy"
               />
             </div>
           </div>
