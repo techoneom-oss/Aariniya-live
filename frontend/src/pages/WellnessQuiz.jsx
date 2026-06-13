@@ -211,25 +211,61 @@ export default function WellnessQuiz({ setActivePage }) {
   };
 
   const handleShare = async () => {
+    const shareCards = {
+      'Deep Root': 'deep-root.png',
+      'Golden Bloom': 'golden-bloom.png',
+      'Forest Warrior': 'wild-spirit.png',
+      'Calm River': 'calm-forest.png'
+    };
+
+    const filename = shareCards[finalResult] || 'golden-bloom.png';
+    const imageUrl = `/assets/${filename}`;
     const shareText = `I just took Aarini's Forest Wellness Quiz — I'm a ${finalResult}! Find yours at @aarinidevrani aariniya.netlify.app/wellness-quiz`;
-    
-    if (navigator.share) {
+
+    let file = null;
+    try {
+      const response = await fetch(imageUrl);
+      const blob = await response.blob();
+      file = new File([blob], filename, { type: 'image/png' });
+    } catch (fetchErr) {
+      console.error('Error fetching image for sharing:', fetchErr);
+    }
+
+    // Try Web Share API with file support first (standard on mobile)
+    if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
       try {
         await navigator.share({
+          files: [file],
           title: `My Forest Wellness Type: ${finalResult}`,
-          text: shareText,
-          url: 'https://aariniya.netlify.app/wellness-quiz',
+          text: shareText
         });
+        return; // Successfully shared!
       } catch (err) {
-        console.log('Error sharing:', err);
+        if (err.name === 'AbortError') {
+          console.log('Share aborted by user.');
+          return;
+        }
+        console.error('Error sharing via Web Share API:', err);
       }
-    } else {
+    }
+
+    // Fallback: Direct download for desktop or unsupported browsers
+    try {
+      const link = document.createElement('a');
+      link.href = imageUrl;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (dlErr) {
+      console.error('Error downloading card image:', dlErr);
+      // Last resort fallback: Copy text to clipboard
       try {
         await navigator.clipboard.writeText(shareText);
         setCopySuccess(true);
         setTimeout(() => setCopySuccess(false), 3000);
-      } catch (err) {
-        console.error('Failed to copy text:', err);
+      } catch (clipErr) {
+        console.error('Failed to copy text:', clipErr);
       }
     }
   };
