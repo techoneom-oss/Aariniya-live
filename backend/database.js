@@ -1,6 +1,7 @@
 import sqlite3 from 'sqlite3';
 import bcrypt from 'bcryptjs';
 import path from 'path';
+import fs from 'fs';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -10,6 +11,7 @@ const dbPath = path.resolve(__dirname, 'aariniya.db');
 const db = new sqlite3.Database(dbPath, (err) => {
   if (err) {
     console.error('Error opening database', err.message);
+    handleDbFailure(err);
   } else {
     db.run("PRAGMA foreign_keys = ON;");
     console.log('Connected to SQLite database at:', dbPath);
@@ -17,8 +19,42 @@ const db = new sqlite3.Database(dbPath, (err) => {
   }
 });
 
+function handleDbFailure(err) {
+  console.warn('CRITICAL: Database schema error or corruption detected:', err.message);
+  console.warn('Attempting self-healing by deleting database file to reset schema...');
+  try {
+    db.close(() => {
+      try {
+        if (fs.existsSync(dbPath)) {
+          fs.unlinkSync(dbPath);
+          console.log('Successfully deleted corrupted database file:', dbPath);
+        }
+      } catch (unlinkErr) {
+        console.error('Failed to delete database file:', unlinkErr);
+      }
+      process.exit(1); // Exit with error so process manager restarts container
+    });
+  } catch (closeErr) {
+    try {
+      if (fs.existsSync(dbPath)) {
+        fs.unlinkSync(dbPath);
+      }
+    } catch (e) {}
+    process.exit(1);
+  }
+}
+
 function initializeDatabase() {
   db.serialize(() => {
+    const checkErr = (err, context) => {
+      if (err) {
+        console.error(`Database error during ${context}:`, err.message);
+        handleDbFailure(err);
+        return true;
+      }
+      return false;
+    };
+
     // 1. Users Table
     db.run(`
       CREATE TABLE IF NOT EXISTS users (
@@ -36,21 +72,18 @@ function initializeDatabase() {
         role TEXT DEFAULT 'user',
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
       )
-    `, () => {
+    `, (err) => {
+      if (checkErr(err, "creating users table")) return;
+      
       db.all("PRAGMA table_info(users)", (err, rows) => {
-        if (err) {
-          console.error("Error reading users table info:", err);
-          return;
-        }
+        if (checkErr(err, "reading users table info")) return;
+        
         const hasRole = rows.some(r => r.name === 'role');
         if (!hasRole) {
           db.run("ALTER TABLE users ADD COLUMN role TEXT DEFAULT 'user'", (alterErr) => {
-            if (alterErr) {
-              console.error("Error adding role column to users:", alterErr);
-            } else {
-              console.log("Successfully migrated: added 'role' column to users table.");
-              seedUsers();
-            }
+            if (checkErr(alterErr, "adding role column to users")) return;
+            console.log("Successfully migrated: added 'role' column to users table.");
+            seedUsers();
           });
         } else {
           seedUsers();
@@ -68,15 +101,16 @@ function initializeDatabase() {
         description TEXT,
         price REAL NOT NULL,
         original_price REAL,
-        highlights TEXT, -- JSON array of highlights
-        taste_profile TEXT, -- JSON object: flavor, aroma, texture, source
-        ways_to_enjoy TEXT, -- JSON array of ways
-        details TEXT, -- JSON object: brand, net_weight, packaging, type, origin, storage
-        who_is_it_for TEXT, -- JSON array
-        images TEXT, -- JSON array of image URLs
+        highlights TEXT,
+        taste_profile TEXT,
+        ways_to_enjoy TEXT,
+        details TEXT,
+        who_is_it_for TEXT,
+        images TEXT,
         inventory INTEGER DEFAULT 100 CHECK(inventory >= 0)
       )
-    `, () => {
+    `, (err) => {
+      if (checkErr(err, "creating products table")) return;
       seedProducts();
     });
 
@@ -89,12 +123,13 @@ function initializeDatabase() {
         title TEXT,
         rating INTEGER CHECK(rating >= 1 AND rating <= 5),
         review_text TEXT NOT NULL,
-        tags TEXT, -- JSON array (e.g. ["pure", "thick"])
+        tags TEXT,
         date DATETIME DEFAULT CURRENT_TIMESTAMP,
         helpful_count INTEGER DEFAULT 0,
         FOREIGN KEY(product_id) REFERENCES products(id)
       )
-    `, () => {
+    `, (err) => {
+      if (checkErr(err, "creating reviews table")) return;
       seedReviews();
     });
 
@@ -111,21 +146,18 @@ function initializeDatabase() {
         image TEXT,
         enrollment_status TEXT DEFAULT 'open' CHECK(enrollment_status IN ('open', 'closed'))
       )
-    `, () => {
+    `, (err) => {
+      if (checkErr(err, "creating courses table")) return;
+      
       db.all("PRAGMA table_info(courses)", (err, rows) => {
-        if (err) {
-          console.error("Error reading courses table info:", err);
-          return;
-        }
+        if (checkErr(err, "reading courses table info")) return;
+        
         const hasStatus = rows.some(r => r.name === 'enrollment_status');
         if (!hasStatus) {
           db.run("ALTER TABLE courses ADD COLUMN enrollment_status TEXT DEFAULT 'open' CHECK(enrollment_status IN ('open', 'closed'))", (alterErr) => {
-            if (alterErr) {
-              console.error("Error adding enrollment_status column to courses:", alterErr);
-            } else {
-              console.log("Successfully migrated: added 'enrollment_status' column to courses table.");
-              seedCourses();
-            }
+            if (checkErr(alterErr, "adding enrollment_status column to courses")) return;
+            console.log("Successfully migrated: added 'enrollment_status' column to courses table.");
+            seedCourses();
           });
         } else {
           seedCourses();
@@ -144,13 +176,15 @@ function initializeDatabase() {
         email TEXT NOT NULL,
         phone TEXT NOT NULL,
         address TEXT NOT NULL,
-        items TEXT NOT NULL, -- JSON array of purchased items
+        items TEXT NOT NULL,
         total_amount REAL NOT NULL,
-        payment_status TEXT DEFAULT 'pending', -- 'pending', 'paid', 'failed'
+        payment_status TEXT DEFAULT 'pending',
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY(user_id) REFERENCES users(id)
       )
-    `);
+    `, (err) => {
+      if (checkErr(err, "creating orders table")) return;
+    });
 
     // 6. Quiz Leads Table
     db.run(`
@@ -160,7 +194,9 @@ function initializeDatabase() {
         result_type TEXT NOT NULL,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
       )
-    `);
+    `, (err) => {
+      if (checkErr(err, "creating quiz_leads table")) return;
+    });
   });
 }
 
