@@ -13,8 +13,22 @@ import AdminDashboard from './pages/AdminDashboard';
 import Policies from './pages/Policies';
 import WellnessQuiz from './pages/WellnessQuiz';
 
+const getInitialPage = () => {
+  const path = window.location.pathname;
+  if (path === '/' || path === '') return 'home';
+  if (path.startsWith('/deep-forest-honey')) return 'product';
+  if (path.startsWith('/journey') || path.startsWith('/our-journey')) return 'journey';
+  if (path.startsWith('/wellness-quiz')) return 'quiz';
+  if (path.startsWith('/courses') || path.startsWith('/wellness-courses')) return 'courses';
+  if (path.startsWith('/policies')) return 'policies';
+  if (path.startsWith('/auth') || path.startsWith('/login') || path.startsWith('/signup')) return 'auth';
+  if (path.startsWith('/profile')) return 'profile';
+  if (path.startsWith('/admin')) return 'admin';
+  return 'home';
+};
+
 export default function App() {
-  const [activePage, setActivePage] = useState('home');
+  const [activePage, setActivePage] = useState(getInitialPage);
   const [cartItems, setCartItems] = useState([]);
   const [cartOpen, setCartOpen] = useState(false);
   const [user, setUser] = useState(() => {
@@ -36,6 +50,38 @@ export default function App() {
     setPoliciesSection(section);
     setActivePage('policies');
   };
+
+  // Synchronize URL path with activePage state
+  useEffect(() => {
+    const routeMap = {
+      'home': '/',
+      'product': '/deep-forest-honey',
+      'journey': '/journey',
+      'quiz': '/wellness-quiz',
+      'courses': '/courses',
+      'policies': '/policies',
+      'auth': '/auth',
+      'profile': '/profile',
+      'admin': '/admin'
+    };
+
+    const currentPath = window.location.pathname;
+    const targetPath = routeMap[activePage] || '/';
+
+    if (currentPath !== targetPath) {
+      window.history.pushState(null, '', targetPath);
+    }
+  }, [activePage]);
+
+  // Handle browser back/forward buttons (routing popstate)
+  useEffect(() => {
+    const handlePopState = () => {
+      setActivePage(getInitialPage());
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
 
   useEffect(() => {
     const existingScripts = document.querySelectorAll('.dynamic-jsonld');
