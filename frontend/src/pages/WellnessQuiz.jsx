@@ -222,50 +222,52 @@ export default function WellnessQuiz({ setActivePage }) {
     const imageUrl = `/assets/${filename}`;
     const shareText = `I just took Aarini's Forest Wellness Quiz — I'm a ${finalResult}! Find yours at @aarinidevrani aariniya.netlify.app/wellness-quiz`;
 
-    let file = null;
-    try {
-      const response = await fetch(imageUrl);
-      const blob = await response.blob();
-      file = new File([blob], filename, { type: 'image/png' });
-    } catch (fetchErr) {
-      console.error('Error fetching image for sharing:', fetchErr);
-    }
+    let shared = false;
 
-    // Try Web Share API with file support first (standard on mobile)
-    if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
+    // Try Web Share API first
+    if (navigator.share && navigator.canShare) {
       try {
-        await navigator.share({
-          files: [file],
-          title: `My Forest Wellness Type: ${finalResult}`,
-          text: shareText
-        });
-        return; // Successfully shared!
+        const response = await fetch(imageUrl);
+        if (response.ok) {
+          const blob = await response.blob();
+          const file = new File([blob], filename, { type: 'image/png' });
+          if (navigator.canShare({ files: [file] })) {
+            await navigator.share({
+              files: [file],
+              title: `My Forest Wellness Type: ${finalResult}`,
+              text: shareText
+            });
+            shared = true;
+          }
+        }
       } catch (err) {
         if (err.name === 'AbortError') {
           console.log('Share aborted by user.');
-          return;
+          return; // User cancelled
         }
         console.error('Error sharing via Web Share API:', err);
       }
     }
 
     // Fallback: Direct download for desktop or unsupported browsers
-    try {
-      const link = document.createElement('a');
-      link.href = imageUrl;
-      link.download = filename;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    } catch (dlErr) {
-      console.error('Error downloading card image:', dlErr);
-      // Last resort fallback: Copy text to clipboard
+    if (!shared) {
       try {
-        await navigator.clipboard.writeText(shareText);
-        setCopySuccess(true);
-        setTimeout(() => setCopySuccess(false), 3000);
-      } catch (clipErr) {
-        console.error('Failed to copy text:', clipErr);
+        const link = document.createElement('a');
+        link.href = imageUrl;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      } catch (dlErr) {
+        console.error('Error downloading card image:', dlErr);
+        // Last resort fallback: Copy text to clipboard
+        try {
+          await navigator.clipboard.writeText(shareText);
+          setCopySuccess(true);
+          setTimeout(() => setCopySuccess(false), 3000);
+        } catch (clipErr) {
+          console.error('Failed to copy text:', clipErr);
+        }
       }
     }
   };
