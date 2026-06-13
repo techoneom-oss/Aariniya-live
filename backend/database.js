@@ -74,21 +74,6 @@ function initializeDatabase() {
       )
     `, (err) => {
       if (checkErr(err, "creating users table")) return;
-      
-      db.all("PRAGMA table_info(users)", (err, rows) => {
-        if (checkErr(err, "reading users table info")) return;
-        
-        const hasRole = rows.some(r => r.name === 'role');
-        if (!hasRole) {
-          db.run("ALTER TABLE users ADD COLUMN role TEXT DEFAULT 'user'", (alterErr) => {
-            if (checkErr(alterErr, "adding role column to users")) return;
-            console.log("Successfully migrated: added 'role' column to users table.");
-            seedUsers();
-          });
-        } else {
-          seedUsers();
-        }
-      });
     });
 
     // 2. Products Table
@@ -111,7 +96,6 @@ function initializeDatabase() {
       )
     `, (err) => {
       if (checkErr(err, "creating products table")) return;
-      seedProducts();
     });
 
     // 3. Reviews Table
@@ -130,7 +114,6 @@ function initializeDatabase() {
       )
     `, (err) => {
       if (checkErr(err, "creating reviews table")) return;
-      seedReviews();
     });
 
     // 4. Courses Table
@@ -148,21 +131,6 @@ function initializeDatabase() {
       )
     `, (err) => {
       if (checkErr(err, "creating courses table")) return;
-      
-      db.all("PRAGMA table_info(courses)", (err, rows) => {
-        if (checkErr(err, "reading courses table info")) return;
-        
-        const hasStatus = rows.some(r => r.name === 'enrollment_status');
-        if (!hasStatus) {
-          db.run("ALTER TABLE courses ADD COLUMN enrollment_status TEXT DEFAULT 'open' CHECK(enrollment_status IN ('open', 'closed'))", (alterErr) => {
-            if (checkErr(alterErr, "adding enrollment_status column to courses")) return;
-            console.log("Successfully migrated: added 'enrollment_status' column to courses table.");
-            seedCourses();
-          });
-        } else {
-          seedCourses();
-        }
-      });
     });
 
     // 5. Orders Table
@@ -196,13 +164,77 @@ function initializeDatabase() {
       )
     `, (err) => {
       if (checkErr(err, "creating quiz_leads table")) return;
+      
+      // Chained seeding to avoid foreign key / constraint race condition failures
+      runMigrationsAndSeeding();
     });
   });
 }
 
+function runMigrationsAndSeeding() {
+  // 1. Users Table info & Alter/Seed
+  db.all("PRAGMA table_info(users)", (err, rows) => {
+    if (err) {
+      console.error("Error reading users table info:", err);
+      handleDbFailure(err);
+      return;
+    }
+    const proceedWithUsers = () => {
+      seedUsers();
+      proceedWithCourses();
+    };
+    const hasRole = rows.some(r => r.name === 'role');
+    if (!hasRole) {
+      db.run("ALTER TABLE users ADD COLUMN role TEXT DEFAULT 'user'", (alterErr) => {
+        if (alterErr) {
+          console.error("Error adding role column to users:", alterErr);
+          handleDbFailure(alterErr);
+          return;
+        }
+        console.log("Successfully migrated: added 'role' column to users table.");
+        proceedWithUsers();
+      });
+    } else {
+      proceedWithUsers();
+    }
+  });
+
+  function proceedWithCourses() {
+    db.all("PRAGMA table_info(courses)", (err, rows) => {
+      if (err) {
+        console.error("Error reading courses table info:", err);
+        handleDbFailure(err);
+        return;
+      }
+      const proceedWithCoursesAndProducts = () => {
+        seedCourses();
+        seedProducts(); // This will seed products and chain seedReviews!
+      };
+      const hasStatus = rows.some(r => r.name === 'enrollment_status');
+      if (!hasStatus) {
+        db.run("ALTER TABLE courses ADD COLUMN enrollment_status TEXT DEFAULT 'open' CHECK(enrollment_status IN ('open', 'closed'))", (alterErr) => {
+          if (alterErr) {
+            console.error("Error adding enrollment_status column to courses:", alterErr);
+            handleDbFailure(alterErr);
+            return;
+          }
+          console.log("Successfully migrated: added 'enrollment_status' column to courses table.");
+          proceedWithCoursesAndProducts();
+        });
+      } else {
+        proceedWithCoursesAndProducts();
+      }
+    });
+  }
+}
+
 function seedProducts() {
   db.get("SELECT COUNT(*) as count FROM products", (err, row) => {
-    if (err) return console.error(err);
+    if (err) {
+      console.error("Error checking products count:", err);
+      handleDbFailure(err);
+      return;
+    }
 
     const description = "Raw, unfiltered, and unpasteurized. Harvested by tribal communities from the sal and mahua forests of Odisha and Jharkhand — one of India's most biodiverse forest corridors. No heat treatment. No added sugar. No blending from unknown sources. Every jar carries the natural pollen, enzymes, and micronutrients of a thousand wild forest flowers.";
     const short_desc = "Raw Forest Honey | Small Batch Packed | Premium Glass Jar | 900g";
@@ -295,8 +327,13 @@ function seedProducts() {
         JSON.stringify(whoIsItFor),
         JSON.stringify(images),
         (err) => {
-          if (err) console.error("Error seeding product", err);
-          else console.log("Seeded default Deep Forest Honey product.");
+          if (err) {
+            console.error("Error seeding product", err);
+            handleDbFailure(err);
+          } else {
+            console.log("Seeded default Deep Forest Honey product.");
+            seedReviews(); // Seed reviews AFTER seeding product successfully!
+          }
         }
       );
       stmt.finalize();
@@ -321,8 +358,13 @@ function seedProducts() {
         JSON.stringify(details),
         JSON.stringify(images)
       ], (updateErr) => {
-        if (updateErr) console.error("Error updating product 1:", updateErr);
-        else console.log("Successfully updated product 1 with Central India details.");
+        if (updateErr) {
+          console.error("Error updating product 1:", updateErr);
+          handleDbFailure(updateErr);
+        } else {
+          console.log("Successfully updated product 1 with Central India details.");
+          seedReviews(); // Seed reviews AFTER updating product successfully!
+        }
       });
     }
   });
