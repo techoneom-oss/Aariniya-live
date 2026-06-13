@@ -2,6 +2,24 @@ import { useState, useEffect } from 'react';
 import { ArrowLeft, ArrowRight, Check, Share2, RotateCcw, Mail, Lock } from 'lucide-react';
 import { API_BASE_URL } from '../config';
 
+const InstagramIcon = ({ size = 20, style = {} }) => (
+  <svg
+    viewBox="0 0 24 24"
+    width={size}
+    height={size}
+    stroke="currentColor"
+    strokeWidth="2"
+    fill="none"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    style={style}
+  >
+    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+  </svg>
+);
+
 const QUESTIONS = [
   {
     id: 1,
@@ -102,6 +120,8 @@ export default function WellnessQuiz({ setActivePage }) {
   const [showResults, setShowResults] = useState(false);
   const [finalResult, setFinalResult] = useState('');
   const [copySuccess, setCopySuccess] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -272,6 +292,70 @@ export default function WellnessQuiz({ setActivePage }) {
     }
   };
 
+  const handleInstaShare = async () => {
+    const shareCards = {
+      'Deep Root': 'deep-root.png',
+      'Golden Bloom': 'golden-bloom.png',
+      'Forest Warrior': 'wild-spirit.png',
+      'Calm River': 'calm-forest.png'
+    };
+
+    const filename = shareCards[finalResult] || 'golden-bloom.png';
+    const imageUrl = `/assets/${filename}`;
+
+    try {
+      await navigator.clipboard.writeText('@aarinidevrani');
+    } catch (err) {
+      console.error('Failed to copy username:', err);
+    }
+
+    let shared = false;
+    if (navigator.share && navigator.canShare) {
+      try {
+        const response = await fetch(imageUrl);
+        if (response.ok) {
+          const blob = await response.blob();
+          const file = new File([blob], filename, { type: 'image/png' });
+          if (navigator.canShare({ files: [file] })) {
+            await navigator.share({
+              files: [file],
+              title: `My Forest Wellness Type: ${finalResult}`,
+              text: `My Forest Wellness Type is ${finalResult}! Find yours at @aarinidevrani aariniya.netlify.app/wellness-quiz`
+            });
+            shared = true;
+          }
+        }
+      } catch (err) {
+        if (err.name !== 'AbortError') {
+          console.error('Error sharing to Instagram:', err);
+        } else {
+          return;
+        }
+      }
+    }
+
+    if (!shared) {
+      try {
+        const link = document.createElement('a');
+        link.href = imageUrl;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        setToastMessage("Card downloaded & '@aarinidevrani' copied! Share it on your Instagram Story to collaborate.");
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), 5000);
+      } catch (dlErr) {
+        console.error('Download failed:', dlErr);
+      }
+    } else {
+      setToastMessage("Tag '@aarinidevrani' copied to clipboard for collaboration!");
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 5000);
+    }
+  };
+
   const handleRetake = () => {
     setCurrentQuestion(0);
     setAnswers([]);
@@ -289,10 +373,10 @@ export default function WellnessQuiz({ setActivePage }) {
       : Math.round((currentQuestion / QUESTIONS.length) * 100);
 
   return (
-    <div style={styles.page}>
+    <div className="quiz-page-wrapper" style={styles.page}>
       {/* Page Header Section */}
       {!showResults && (
-        <div style={styles.header}>
+        <div className="quiz-page-header" style={styles.header}>
           <span style={styles.kicker}>AARINIYA WELLNESS QUIZ</span>
           <h1 style={styles.title}>What's your forest wellness type?</h1>
           <p style={styles.subtext}>6 questions · 2 minutes · Aarini's personalised ritual for you</p>
@@ -300,7 +384,7 @@ export default function WellnessQuiz({ setActivePage }) {
       )}
 
       {/* Main Container */}
-      <div style={styles.card}>
+      <div className="quiz-page-card" style={styles.card}>
         {/* Progress Bar */}
         <div style={styles.progressContainer}>
           <div style={{ ...styles.progressBar, width: `${progressPercent}%` }}></div>
@@ -392,7 +476,7 @@ export default function WellnessQuiz({ setActivePage }) {
             </div>
 
             {/* Display the actual result card image directly! */}
-            <div style={styles.cardImageContainer}>
+            <div style={styles.cardImageContainer} className="cardImageContainer">
               <img 
                 src={`/assets/${
                   finalResult === 'Deep Root' ? 'deep-root.png' :
@@ -404,6 +488,16 @@ export default function WellnessQuiz({ setActivePage }) {
                 style={styles.cardImage} 
               />
             </div>
+
+            {/* Direct Instagram Stories Share Button */}
+            <button 
+              className="btn btn-primary"
+              style={styles.instaBtn}
+              onClick={handleInstaShare}
+            >
+              <InstagramIcon size={18} style={{ marginRight: '8px' }} />
+              Share on Instagram Story
+            </button>
 
             <p style={styles.resultDesc}>
               {RESULTS[finalResult].description}
@@ -465,6 +559,12 @@ export default function WellnessQuiz({ setActivePage }) {
           </div>
         )}
       </div>
+
+      {showToast && (
+        <div style={styles.toast}>
+          {toastMessage}
+        </div>
+      )}
     </div>
   );
 }
@@ -789,5 +889,44 @@ const styles = {
     maxHeight: '420px',
     objectFit: 'contain',
     display: 'block',
+  },
+  instaBtn: {
+    backgroundColor: '#e1306c',
+    color: '#ffffff',
+    border: 'none',
+    padding: '0.9rem 1.5rem',
+    borderRadius: '30px',
+    fontFamily: 'var(--font-sans)',
+    fontSize: '0.85rem',
+    fontWeight: '600',
+    letterSpacing: '0.08em',
+    textTransform: 'uppercase',
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    maxWidth: '350px',
+    margin: '0.5rem auto 2rem auto',
+    boxShadow: '0 4px 15px rgba(225, 48, 108, 0.25)',
+    transition: 'var(--transition-fast)',
+  },
+  toast: {
+    position: 'fixed',
+    bottom: '24px',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    backgroundColor: '#1c352d',
+    color: '#ffffff',
+    padding: '12px 24px',
+    borderRadius: '30px',
+    fontSize: '0.85rem',
+    fontWeight: '500',
+    zIndex: 1000,
+    boxShadow: '0 8px 30px rgba(0, 0, 0, 0.15)',
+    textAlign: 'center',
+    width: '90%',
+    maxWidth: '450px',
+    animation: 'slideUp 0.3s ease',
   }
 };

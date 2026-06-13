@@ -400,17 +400,15 @@ button, input, textarea, select {
     position: fixed;
     top: 0;
     right: 0;
-    width: 300px;
+    width: 280px;
     height: 100vh;
-    background-color: var(--glass-bg);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-left: 1px solid var(--glass-border);
-    box-shadow: -10px 0 30px rgba(28, 53, 45, 0.08);
+    background-color: #fbf9f4; /* solid warm cream/ivory background */
+    border-left: 1px solid rgba(28, 53, 45, 0.08);
+    box-shadow: -10px 0 30px rgba(28, 53, 45, 0.1);
     flex-direction: column;
     align-items: flex-start;
-    padding: 6rem 2.5rem 2.5rem 2.5rem;
-    gap: 2rem;
+    padding: 6.5rem 2rem 2rem 2rem;
+    gap: 0;
     transform: translateX(100%);
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     z-index: 140;
@@ -418,6 +416,65 @@ button, input, textarea, select {
 
   .nav-links.open {
     transform: translateX(0);
+  }
+
+  .nav-links span {
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.08em !important;
+    color: var(--color-primary) !important;
+    width: 100%;
+    padding: 1.1rem 0 !important;
+    border-bottom: 1px solid rgba(28, 53, 45, 0.06);
+    display: block;
+    text-align: left;
+    text-transform: uppercase;
+  }
+
+  .nav-links span:last-child {
+    border-bottom: none;
+  }
+}
+
+/* SlideUp animation for toast */
+@keyframes slideUp {
+  from { transform: translate(-50%, 100px); opacity: 0; }
+  to { transform: translate(-50%, 0); opacity: 1; }
+}
+
+/* Wellness Quiz mobile application UI/UX overrides */
+@media (max-width: 576px) {
+  .quiz-page-wrapper {
+    padding: 1rem 0 3rem 0 !important;
+    background-color: #ffffff !important;
+    min-height: 100vh !important;
+  }
+  
+  .quiz-page-header {
+    margin-bottom: 1.5rem !important;
+    padding: 0 1.25rem !important;
+  }
+
+  .quiz-page-header h1 {
+    font-size: 1.85rem !important;
+  }
+  
+  .quiz-page-card {
+    padding: 1.5rem 1.25rem !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    max-width: 100% !important;
+  }
+  
+  .quiz-page-card img {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+  
+  .quiz-page-card .cardImageContainer {
+    border-radius: 8px !important;
+    margin-bottom: 1.5rem !important;
   }
 }
 
