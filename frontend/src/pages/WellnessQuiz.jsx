@@ -184,8 +184,21 @@ export default function WellnessQuiz({ setActivePage }) {
         setFinalResult(resultType);
         setShowResults(true);
       } else {
-        const data = await response.json();
-        setError(data.error || 'Something went wrong. Please try again.');
+        let errorMessage = 'Something went wrong. Please try again.';
+        try {
+          const contentType = response.headers.get('content-type');
+          if (contentType && contentType.includes('application/json')) {
+            const data = await response.json();
+            errorMessage = data.error || errorMessage;
+          }
+        } catch (jsonErr) {
+          console.error('Failed to parse error response JSON:', jsonErr);
+        }
+        
+        // Show results even if backend returned an error (graceful fallback)
+        setFinalResult(resultType);
+        setShowResults(true);
+        setError(errorMessage);
       }
     } catch (err) {
       // Fallback in case of server connection issues so users can still see their results

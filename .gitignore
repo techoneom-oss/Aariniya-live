@@ -17,6 +17,10 @@ build/
 backend/logs/receipts/
 *.log
 
+# Ignore SQLite databases
+backend/*.db
+*.db
+
 # System files
 .DS_Store
 Thumbs.db

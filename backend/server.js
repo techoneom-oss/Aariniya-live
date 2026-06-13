@@ -364,36 +364,49 @@ app.post('/api/quiz-email', (req, res) => {
   db.run(query, [email, resultType], function(err) {
     if (err) return res.status(500).json({ error: err.message });
     
-    // Sync with Brevo in background (non-blocking)
+    // Sync with Brevo in background (non-blocking, safe)
     const brevoApiKey = process.env.BREVO_API_KEY;
     if (brevoApiKey) {
-      fetch('https://api.brevo.com/v3/contacts', {
+      const payload = JSON.stringify({
+        email: email,
+        attributes: {
+          WELLTYPE: resultType
+        },
+        listIds: [3],
+        updateEnabled: true
+      });
+
+      const options = {
+        hostname: 'api.brevo.com',
+        port: 443,
+        path: '/v3/contacts',
         method: 'POST',
         headers: {
           'accept': 'application/json',
           'content-type': 'application/json',
-          'api-key': brevoApiKey
-        },
-        body: JSON.stringify({
-          email: email,
-          attributes: {
-            WELLTYPE: resultType
-          },
-          listIds: [3],
-          updateEnabled: true
-        })
-      })
-      .then(async (brevoRes) => {
-        if (!brevoRes.ok) {
-          const errData = await brevoRes.json().catch(() => ({}));
-          console.error('[Brevo Error] Failed to sync contact:', brevoRes.status, errData);
-        } else {
-          console.log('[Brevo Success] Contact synced for email:', email);
+          'api-key': brevoApiKey,
+          'Content-Length': Buffer.byteLength(payload)
         }
-      })
-      .catch((brevoErr) => {
+      };
+
+      const brevoReq = https.request(options, (brevoRes) => {
+        let body = '';
+        brevoRes.on('data', (chunk) => { body += chunk; });
+        brevoRes.on('end', () => {
+          if (brevoRes.statusCode >= 200 && brevoRes.statusCode < 300) {
+            console.log('[Brevo Success] Contact synced for email:', email);
+          } else {
+            console.error('[Brevo Error] Failed to sync contact:', brevoRes.statusCode, body);
+          }
+        });
+      });
+
+      brevoReq.on('error', (brevoErr) => {
         console.error('[Brevo Connection Error] Connection failed:', brevoErr.message);
       });
+
+      brevoReq.write(payload);
+      brevoReq.end();
     } else {
       console.warn('[Brevo Warning] BREVO_API_KEY is not defined.');
     }
@@ -406,6 +419,7 @@ app.post('/api/quiz-email', (req, res) => {
     });
   });
 });
+
 
 // --- COURSES ROUTES ---
 app.get('/api/courses', (req, res) => {
