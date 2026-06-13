@@ -363,6 +363,41 @@ app.post('/api/quiz-email', (req, res) => {
 
   db.run(query, [email, resultType], function(err) {
     if (err) return res.status(500).json({ error: err.message });
+    
+    // Sync with Brevo in background (non-blocking)
+    const brevoApiKey = process.env.BREVO_API_KEY;
+    if (brevoApiKey) {
+      fetch('https://api.brevo.com/v3/contacts', {
+        method: 'POST',
+        headers: {
+          'accept': 'application/json',
+          'content-type': 'application/json',
+          'api-key': brevoApiKey
+        },
+        body: JSON.stringify({
+          email: email,
+          attributes: {
+            WELLTYPE: resultType
+          },
+          listIds: [3],
+          updateEnabled: true
+        })
+      })
+      .then(async (brevoRes) => {
+        if (!brevoRes.ok) {
+          const errData = await brevoRes.json().catch(() => ({}));
+          console.error('[Brevo Error] Failed to sync contact:', brevoRes.status, errData);
+        } else {
+          console.log('[Brevo Success] Contact synced for email:', email);
+        }
+      })
+      .catch((brevoErr) => {
+        console.error('[Brevo Connection Error] Connection failed:', brevoErr.message);
+      });
+    } else {
+      console.warn('[Brevo Warning] BREVO_API_KEY is not defined.');
+    }
+
     res.status(201).json({
       id: this.lastID,
       email,
