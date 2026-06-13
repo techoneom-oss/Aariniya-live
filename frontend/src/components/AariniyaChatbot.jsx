@@ -50,7 +50,7 @@ export default function AariniyaChatbot() {
       } else if (text.includes('price') || text.includes('cost') || text.includes('mrp') || text.includes('expensive') || text.includes('discount') || text.includes('499') || text.includes('1970')) {
         replyText = "We are in our founding launch phase. We want our first customers to experience the product at a special price before we open to the wider market. This is a first harvest, limited batch — only 100 jars at this price.";
       } else if (text.includes('buy') || text.includes('order') || text.includes('purchase') || text.includes('how to') || text.includes('checkout') || text.includes('cart')) {
-        replyText = "You can add to cart directly on the site and checkout securely. Or if you prefer, just tap the \"Order on WhatsApp\" button — I will personally confirm your order there.";
+        replyText = "You can add to cart directly on the site and checkout securely.";
       } else if (text.includes('ship') || text.includes('deliver') || text.includes('courier') || text.includes('location') || text.includes('pincode') || text.includes('city') || text.includes('state')) {
         replyText = "Yes, we ship across India — free shipping on all orders. Delivery is usually 3–6 business days for metros and 5–9 for other areas.";
       } else if (text.includes('crystallis') || text.includes('crystal') || text.includes('spoil') || text.includes('solid') || text.includes('freeze')) {
@@ -66,13 +66,13 @@ export default function AariniyaChatbot() {
       } else if (text.includes('loyalty') || text.includes('repeat') || text.includes('membership') || text.includes('coupon') || text.includes('promo')) {
         replyText = "Right now we are offering our founding launch price — ₹499 instead of ₹1,970. We are building a loyalty program for repeat customers. The 5-jar pack at ₹2,299 gives the best value per jar.";
       } else if (text.includes('phone') || text.includes('call') || text.includes('number') || text.includes('contact') || text.includes('whatsapp') || text.includes('talk') || text.includes('support')) {
-        replyText = "We are a small team and respond fastest on WhatsApp. Just tap the green WhatsApp button on the site and I will get back to you within a few hours.";
+        replyText = "We are a small team. You can join our WhatsApp Channel for exclusive content, or reach out to us directly.";
       } else if (text.includes('aarini') || text.includes('who') || text.includes('profile') || text.includes('founder')) {
         replyText = "Namaste! 🌿 I am Aarini Devrani, the founder of AARINIYA. Raised near the sal and mahua forests of Odisha and Jharkhand, I started AARINIYA to share the raw wellness rituals of Central Indian forests. You can follow my daily rituals on Instagram @aarinidevrani!";
       } else if (text.includes('hello') || text.includes('hi') || text.includes('hey') || text.includes('greetings') || text.includes('namaste') || text.includes('kaise') || text.includes('kya') || text.includes('aao')) {
         replyText = "Namaste! 🌿 I am Aarini, the founder of AARINIYA. I am so happy to connect with you. How can I help you with your wellness journey today? You can ask me about our Deep Forest Honey, our founder Aarini, or our wellness programs.";
       } else {
-        replyText = "I want to make sure this is handled properly for you. Please WhatsApp us directly at [number] and we will sort this out personally.";
+        replyText = "I want to make sure this is handled properly for you. Please join our WhatsApp Channel, and we will sort this out personally.";
       }
 
       const botMessage = {

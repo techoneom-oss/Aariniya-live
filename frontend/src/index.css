@@ -1080,19 +1080,24 @@ button, input, textarea, select {
 
 .pd-add-btn {
   flex: 1;
-  height: 48px;
+  height: 52px;
   background: var(--color-primary);
   color: #fff;
   border: none;
-  border-radius: var(--radius-md);
-  font-size: 0.9rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
+  border-radius: 30px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
   cursor: pointer;
+  box-shadow: 0 4px 15px rgba(28, 53, 45, 0.15);
   transition: var(--transition-fast);
 }
 
-.pd-add-btn:hover { background: var(--color-primary-light); transform: translateY(-1px); }
+.pd-add-btn:hover { 
+  background: var(--color-primary-light); 
+  transform: translateY(-2px); 
+  box-shadow: 0 6px 20px rgba(28, 53, 45, 0.25); 
+}
 
 /* Trust strip */
 .pd-trust-strip {
@@ -1730,6 +1735,46 @@ button, input, textarea, select {
   background-color: #20ba5a;
   transform: scale(1.08) translateY(-2px);
   box-shadow: 0 6px 20px rgba(37, 211, 102, 0.45);
+}
+
+.floating-whatsapp .whatsapp-tooltip {
+  visibility: hidden;
+  width: 190px;
+  background-color: var(--color-primary);
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 12px;
+  position: absolute;
+  z-index: 1000;
+  bottom: 125%;
+  right: 0;
+  opacity: 0;
+  transition: opacity 0.3s, transform 0.3s;
+  transform: translateY(10px);
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(28, 53, 45, 0.15);
+  pointer-events: none;
+  border: 1px solid rgba(251, 249, 244, 0.1);
+}
+
+.floating-whatsapp .whatsapp-tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  right: 20px;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: var(--color-primary) transparent transparent transparent;
+}
+
+.floating-whatsapp:hover .whatsapp-tooltip {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .chatbot-container {

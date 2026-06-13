@@ -312,40 +312,10 @@ export default function ProductDetail({ onAddToCart }) {
               <span className="pd-qty-num">{quantity}</span>
               <button className="pd-qty-btn" onClick={() => setQuantity(q => q + 1)} aria-label="Increase qty"><Plus size={16} /></button>
             </div>
-            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '8px', width: '100%' }}>
+            <div style={{ flex: 1, display: 'flex', width: '100%' }}>
               <button className="pd-add-btn" onClick={handleAddToCartClick} style={{ width: '100%' }}>
                 {product.inventory > 0 ? 'ADD TO CART' : 'PRE-ORDER'}
               </button>
-              <a 
-                href="https://wa.me/91[OWNER FILLS PHONE NUMBER]?text=Hi%20Aarini%2C%20I%20want%20to%20order%20AARINIYA%20Deep%20Forest%20Honey%20(900g).%20Please%20share%20details."
-                target="_blank" 
-                rel="noopener noreferrer"
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '8px',
-                  width: '100%',
-                  height: '48px',
-                  backgroundColor: '#25D366',
-                  color: '#fff',
-                  border: 'none',
-                  borderRadius: 'var(--radius-md)',
-                  fontSize: '0.9rem',
-                  fontWeight: '800',
-                  letterSpacing: '0.08em',
-                  cursor: 'pointer',
-                  textDecoration: 'none',
-                  transition: 'var(--transition-fast)'
-                }}
-                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#20ba5a'; e.currentTarget.style.transform = 'translateY(-1px)'; }}
-                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#25D366'; e.currentTarget.style.transform = 'none'; }}
-              >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.458L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.965C16.528 2.01 14.069.993 11.458.993c-5.462 0-9.902 4.417-9.907 9.863-.002 1.77.474 3.5 1.378 5.008l-1.012 3.693 3.8-.97c1.517.828 3.197 1.263 4.84 1.267zm9.961-6.838c-.29-.145-1.713-.846-1.978-.942-.265-.096-.457-.144-.65.145-.19.29-.74.942-.907 1.135-.166.19-.333.215-.623.07-1.127-.564-1.926-1.008-2.697-2.329-.202-.348.202-.323.578-1.076.09-.18.046-.34-.02-.485-.067-.145-.65-1.569-.89-2.15-.235-.563-.473-.486-.65-.496-.168-.007-.36-.008-.553-.008-.193 0-.507.073-.772.362-.265.29-1.012.99-1.012 2.417s1.036 2.798 1.18 2.99c.145.19 2.036 3.111 4.933 4.363.689.298 1.228.476 1.648.609.693.22 1.325.19 1.824.115.556-.083 1.713-.699 1.954-1.376.241-.676.241-1.255.168-1.376-.073-.12-.265-.19-.554-.336z"/>
-                </svg>
-                <span>Order on WhatsApp</span>
-              </a>
             </div>
           </div>
 
