@@ -391,6 +391,20 @@ export default function WellnessQuiz({ setActivePage }) {
               <div style={styles.divider}></div>
             </div>
 
+            {/* Display the actual result card image directly! */}
+            <div style={styles.cardImageContainer}>
+              <img 
+                src={`/assets/${
+                  finalResult === 'Deep Root' ? 'deep-root.png' :
+                  finalResult === 'Golden Bloom' ? 'golden-bloom.png' :
+                  finalResult === 'Forest Warrior' ? 'wild-spirit.png' :
+                  finalResult === 'Calm River' ? 'calm-forest.png' : 'golden-bloom.png'
+                }`} 
+                alt={`${finalResult} Wellness Type Card`} 
+                style={styles.cardImage} 
+              />
+            </div>
+
             <p style={styles.resultDesc}>
               {RESULTS[finalResult].description}
             </p>
@@ -753,11 +767,27 @@ const styles = {
     justifyContent: 'center',
     flexWrap: 'wrap',
   },
-  shareFeedback: {
+   shareFeedback: {
     fontSize: '0.8rem',
     color: 'var(--color-success)',
     textAlign: 'center',
     marginTop: '0.75rem',
     fontWeight: '500',
+  },
+  cardImageContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginBottom: '2rem',
+    borderRadius: '12px',
+    overflow: 'hidden',
+    boxShadow: '0 10px 30px rgba(26, 60, 52, 0.12)',
+    border: '1px solid rgba(28, 53, 45, 0.06)',
+    backgroundColor: '#ffffff',
+  },
+  cardImage: {
+    width: '100%',
+    maxHeight: '420px',
+    objectFit: 'contain',
+    display: 'block',
   }
 };
