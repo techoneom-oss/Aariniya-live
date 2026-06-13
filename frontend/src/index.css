@@ -1650,3 +1650,47 @@ button, input, textarea, select {
     width: 100%;
   }
 }
+
+/* Floating WhatsApp & Chatbot container positioning */
+.floating-whatsapp {
+  position: fixed;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background-color: #25D366;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  z-index: 999;
+  box-shadow: 0 4px 16px rgba(37, 211, 102, 0.3);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  bottom: 24px;
+  right: 24px;
+}
+
+.floating-whatsapp:hover {
+  background-color: #20ba5a;
+  transform: scale(1.08) translateY(-2px);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.45);
+}
+
+.chatbot-container {
+  position: fixed;
+  bottom: 24px;
+  right: 92px; /* Shifted left on desktop to prevent overlap with WhatsApp button */
+  z-index: 9999;
+  font-family: 'Outfit', sans-serif;
+  transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .floating-whatsapp {
+    bottom: 80px;
+    right: 16px;
+  }
+  .chatbot-container {
+    bottom: 16px;
+    right: 16px;
+  }
+}

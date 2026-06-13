@@ -69,7 +69,12 @@ export default function ProductDetail({ onAddToCart }) {
   const [activeImage, setActiveImage] = useState('/assets/product_qty_1.jpg');
   const [quantity, setQuantity] = useState(1);
   const [activeAccordion, setActiveAccordion] = useState(null);
+  const [activeFaq, setActiveFaq] = useState(null);
   const [selectedPack, setSelectedPack] = useState(1);
+
+  const toggleAccordion = (index) => {
+    setActiveAccordion(activeAccordion === index ? null : index);
+  };
   
   const [newReview, setNewReview] = useState({ name: '', title: '', rating: 5, text: '', tags: '' });
   const [submittingReview, setSubmittingReview] = useState(false);
@@ -158,6 +163,28 @@ export default function ProductDetail({ onAddToCart }) {
   const starsBreakdown = { 5: total5, 4: total4, 3: total3, 2: total2, 1: total1 };
   const displayImages = product ? [getProductPackImage(selectedPack), ...product.images.slice(1)] : [];
 
+  const getProductImageAltText = (src) => {
+    if (src.includes('product_qty_1') || src.includes('product_qty_2') || src.includes('product_qty_5') || src.includes('product_clean_shot')) {
+      return "AARINIYA Deep Forest Multifloral Honey 900g glass jar — raw unfiltered honey from Odisha and Jharkhand tribal forests";
+    }
+    if (src.includes('product_jar_forest')) {
+      return "AARINIYA honey jar with forest background";
+    }
+    if (src.includes('product_founder_jar') || src.includes('aarini_devrani')) {
+      return "Aarini Devrani founder of AARINIYA wellness brand";
+    }
+    if (src.includes('gift_box') || src.includes('packaging')) {
+      return "AARINIYA honey packaging — premium glass jar small batch";
+    }
+    if (src.includes('morning') || src.includes('drizzle')) {
+      return "AARINIYA honey drizzle — pure raw forest honey";
+    }
+    if (src.includes('wellbeing') || src.includes('triptych') || src.includes('texture')) {
+      return "Raw honey texture close-up — AARINIYA forest honey";
+    }
+    return "AARINIYA Deep Forest Multifloral Honey 900g glass jar — raw unfiltered honey from Odisha and Jharkhand tribal forests";
+  };
+
   return (
     <div className="pd-page">
 
@@ -171,7 +198,7 @@ export default function ProductDetail({ onAddToCart }) {
             {!imageLoaded && <div className="pd-img-skeleton" />}
             <img
               src={activeImage}
-              alt={product.name}
+              alt={getProductImageAltText(activeImage)}
               className="pd-main-img"
               style={{ opacity: imageLoaded ? 1 : 0 }}
               onLoad={() => setImageLoaded(true)}
@@ -187,7 +214,7 @@ export default function ProductDetail({ onAddToCart }) {
                 onClick={() => { setActiveImage(img); setImageLoaded(false); }}
                 aria-label={`View image ${idx + 1}`}
               >
-                <img src={img} alt={`View ${idx + 1}`} className="pd-thumb-img" />
+                <img src={img} alt={getProductImageAltText(img)} className="pd-thumb-img" />
               </button>
             ))}
           </div>
@@ -235,7 +262,7 @@ export default function ProductDetail({ onAddToCart }) {
           {/* Offers strip */}
           <div className="pd-offers">
             <div className="pd-offer-item">✓ Free shipping on orders within India</div>
-            <div className="pd-offer-item">✓ Earn 5% cashback on every order, post-delivery</div>
+            <div className="pd-offer-item">✓ Loyalty rewards — coming soon for repeat customers</div>
           </div>
 
           {/* Pack Selector */}
@@ -285,12 +312,42 @@ export default function ProductDetail({ onAddToCart }) {
               <span className="pd-qty-num">{quantity}</span>
               <button className="pd-qty-btn" onClick={() => setQuantity(q => q + 1)} aria-label="Increase qty"><Plus size={16} /></button>
             </div>
-            <button className="pd-add-btn" onClick={handleAddToCartClick}>
-              {product.inventory > 0 ? 'ADD TO CART' : 'PRE-ORDER'}
-            </button>
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '8px', width: '100%' }}>
+              <button className="pd-add-btn" onClick={handleAddToCartClick} style={{ width: '100%' }}>
+                {product.inventory > 0 ? 'ADD TO CART' : 'PRE-ORDER'}
+              </button>
+              <a 
+                href="https://wa.me/91[OWNER FILLS PHONE NUMBER]?text=Hi%20Aarini%2C%20I%20want%20to%20order%20AARINIYA%20Deep%20Forest%20Honey%20(900g).%20Please%20share%20details."
+                target="_blank" 
+                rel="noopener noreferrer"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '8px',
+                  width: '100%',
+                  height: '48px',
+                  backgroundColor: '#25D366',
+                  color: '#fff',
+                  border: 'none',
+                  borderRadius: 'var(--radius-md)',
+                  fontSize: '0.9rem',
+                  fontWeight: '800',
+                  letterSpacing: '0.08em',
+                  cursor: 'pointer',
+                  textDecoration: 'none',
+                  transition: 'var(--transition-fast)'
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#20ba5a'; e.currentTarget.style.transform = 'translateY(-1px)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#25D366'; e.currentTarget.style.transform = 'none'; }}
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.458L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.965C16.528 2.01 14.069.993 11.458.993c-5.462 0-9.902 4.417-9.907 9.863-.002 1.77.474 3.5 1.378 5.008l-1.012 3.693 3.8-.97c1.517.828 3.197 1.263 4.84 1.267zm9.961-6.838c-.29-.145-1.713-.846-1.978-.942-.265-.096-.457-.144-.65.145-.19.29-.74.942-.907 1.135-.166.19-.333.215-.623.07-1.127-.564-1.926-1.008-2.697-2.329-.202-.348.202-.323.578-1.076.09-.18.046-.34-.02-.485-.067-.145-.65-1.569-.89-2.15-.235-.563-.473-.486-.65-.496-.168-.007-.36-.008-.553-.008-.193 0-.507.073-.772.362-.265.29-1.012.99-1.012 2.417s1.036 2.798 1.18 2.99c.145.19 2.036 3.111 4.933 4.363.689.298 1.228.476 1.648.609.693.22 1.325.19 1.824.115.556-.083 1.713-.699 1.954-1.376.241-.676.241-1.255.168-1.376-.073-.12-.265-.19-.554-.336z"/>
+                </svg>
+                <span>Order on WhatsApp</span>
+              </a>
+            </div>
           </div>
-
-          {/* Trust badges moved below description */}
 
           {/* Accordions */}
           <div className="pd-accordions">
@@ -352,6 +409,57 @@ export default function ProductDetail({ onAddToCart }) {
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Common Questions FAQ section */}
+          <div style={{ marginTop: '2.5rem', borderTop: '1px solid rgba(28, 53, 45, 0.08)', paddingTop: '2rem' }}>
+            <h3 style={{ fontSize: '1.25rem', color: 'var(--color-primary)', fontFamily: 'var(--font-serif)', marginBottom: '1.25rem', fontWeight: '600' }}>Common Questions</h3>
+            <div className="pd-accordions">
+              {[
+                {
+                  q: "Is this honey really raw and unfiltered?",
+                  a: "Yes. AARINIYA honey is cold-extracted and never heated above 40°C. It retains its natural pollen, enzymes, and beneficial micronutrients. You may notice natural crystallisation over time — this is a sign of purity, not spoilage."
+                },
+                {
+                  q: "Where exactly is this honey sourced from?",
+                  a: "Our honey is harvested from the sal and mahua forests of Odisha and Jharkhand — one of India's most biodiverse forest corridors. We work directly with tribal communities who have harvested wild honey for generations using traditional, low-impact methods."
+                },
+                {
+                  q: "Does it have any added sugar or preservatives?",
+                  a: "No. Zero added sugar. Zero preservatives. Zero artificial ingredients. What goes into the jar is exactly what comes out of the forest hive."
+                },
+                {
+                  q: "What is the shelf life?",
+                  a: "Raw honey has an indefinite shelf life when stored properly. Keep the jar sealed, away from direct sunlight, in a cool dry place. Best consumed within 18 months of the harvest date on the label."
+                },
+                {
+                  q: "My honey has crystallised. Is it still good?",
+                  a: "Absolutely. Crystallisation is natural and actually confirms purity — processed honey rarely crystallises because its beneficial compounds have been removed. Gently warm the jar in lukewarm water (never microwave) to return it to liquid form."
+                },
+                {
+                  q: "How is this different from supermarket honey?",
+                  a: "Most commercial honey is pasteurised at high heat, blended from multiple unknown sources, and often diluted. AARINIYA is single-source, cold-filled, small batch, and harvested from a specific forest region. Every jar is traceable."
+                },
+                {
+                  q: "Do you offer free shipping?",
+                  a: "Yes. Free shipping on all orders across India. Orders are dispatched within 2 business days. Delivery takes 3–6 business days depending on your location."
+                },
+                {
+                  q: "What if I want to return or my order arrives damaged?",
+                  a: "We have a 7-day return and replacement policy. If your order arrives damaged or is not as described, WhatsApp us within 7 days of delivery with a photo and we will arrange a replacement or full refund."
+                }
+              ].map((faq, idx) => (
+                <div key={idx} className={`pd-acc-item ${activeFaq === idx ? 'pd-acc-open' : ''}`}>
+                  <button className="pd-acc-header" onClick={() => setActiveFaq(activeFaq === idx ? null : idx)} style={{ padding: '12px 0' }}>
+                    <span style={{ fontWeight: '500', textAlign: 'left' }}>{faq.q}</span>
+                    {activeFaq === idx ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+                  </button>
+                  <div className="pd-acc-body">
+                    <div className="pd-acc-inner" style={{ paddingBottom: '12px', color: 'var(--color-text-muted)', fontSize: '0.9rem', lineHeight: '1.5' }}>{faq.a}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

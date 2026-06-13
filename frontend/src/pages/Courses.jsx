@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Calendar, Sparkles } from 'lucide-react';
 import { API_BASE_URL } from '../config';
 
-export default function Courses({ onEnrollCourse }) {
+export default function Courses({ onEnrollCourse, setActivePage }) {
   const [courses, setCourses] = useState([
     {
       id: 1,
@@ -47,6 +47,7 @@ export default function Courses({ onEnrollCourse }) {
     } catch (err) {
       console.error(err);
     } finally {
+      // Keep loading false
       setLoading(false);
     }
   };
@@ -76,7 +77,7 @@ export default function Courses({ onEnrollCourse }) {
         <span style={styles.kicker}>Aariniya Wellness Ecosystem</span>
         <h1 style={styles.title}>Yoga Courses & Nourishing Diet Plans</h1>
         <p style={styles.subtitle}>
-          Elevate your daily rituals. Explore guided practices and nutrition blueprints designed to restore balance and vitality.
+          Aarini's guided wellness programs — launching soon. Join the waitlist to be first to know.
         </p>
       </div>
 
@@ -127,26 +128,45 @@ export default function Courses({ onEnrollCourse }) {
               <p style={styles.courseSubtitle}>{c.subtitle}</p>
               <p style={styles.description}>{c.description}</p>
               
-              <div style={styles.footerRow}>
-                <div style={styles.priceCol}>
-                  <span style={styles.priceLabel}>Access Fee</span>
-                  <span style={styles.priceVal}>₹{c.price}</span>
-                </div>
-
-                <button 
-                  className="btn btn-primary" 
-                  style={styles.enrollBtn}
-                  onClick={() => onEnrollCourse({
-                    id: `course_${c.id}`,
-                    name: c.title,
-                    price: c.price,
-                    image: c.image,
-                    isCourse: true
-                  })}
-                >
-                  Enroll Now
-                </button>
-              </div>
+              <a 
+                href="#tea-waitlist"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setActivePage('home');
+                  setTimeout(() => {
+                    const el = document.getElementById('tea-waitlist');
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  }, 100);
+                }}
+                className="btn"
+                style={{
+                  display: 'block',
+                  backgroundColor: 'var(--color-accent)',
+                  color: 'var(--color-primary)',
+                  padding: '10px 16px',
+                  borderRadius: 'var(--radius-md)',
+                  fontSize: '0.85rem',
+                  fontWeight: '700',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.05em',
+                  textAlign: 'center',
+                  textDecoration: 'none',
+                  marginTop: '1.25rem',
+                  transition: 'background-color 0.2s, transform 0.2s',
+                  width: '100%',
+                  cursor: 'pointer'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = 'var(--color-accent-hover)';
+                  e.currentTarget.style.transform = 'translateY(-1px)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = 'var(--color-accent)';
+                  e.currentTarget.style.transform = 'none';
+                }}
+              >
+                Coming Soon — Join Waitlist
+              </a>
             </div>
           </div>
         ))}

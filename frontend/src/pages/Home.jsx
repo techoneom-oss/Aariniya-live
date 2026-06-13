@@ -11,6 +11,7 @@ export default function Home({ setActivePage }) {
       {/* Hero Section */}
       <header style={styles.hero}>
         <div style={styles.heroOverlay}></div>
+        <img src="/assets/product_jar_forest.jpg" alt="AARINIYA Deep Forest Honey jar surrounded by Central Indian forest — raw tribal honey from Odisha and Jharkhand" style={{ display: 'none' }} />
         <div className="container" style={styles.heroContent}>
           <span style={styles.heroKicker}>Nature's Sweetest Ritual</span>
           <h1 className="hero-title">A Wellness Brand rooted in the ancient forests of Central India</h1>
@@ -108,12 +109,35 @@ export default function Home({ setActivePage }) {
             <button className="btn btn-secondary" onClick={() => handleNav('journey')} style={{ marginTop: '1rem' }}>
               Read the Full Story
             </button>
+            <div style={{ marginTop: '1.25rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <a 
+                href="https://www.instagram.com/aarinidevrani" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                style={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: '6px', 
+                  color: 'var(--color-text-muted)', 
+                  fontSize: '13px', 
+                  textDecoration: 'none' 
+                }}
+                className="hover-gold"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle' }}>
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
+                <span>Follow Aarini's daily wellness rituals → @aarinidevrani</span>
+              </a>
+            </div>
           </div>
           <div style={styles.founderImages}>
             <div className="founder-image-frame">
               <img 
                 src="/assets/product_gallery_new_3.jpg" 
-                alt="Aarini Devrani morning wellness ritual" 
+                alt="Aarini Devrani — founder of AARINIYA, wellness brand rooted in Odisha forests" 
                 style={styles.founderImage}
                 loading="lazy"
               />
@@ -134,7 +158,7 @@ export default function Home({ setActivePage }) {
       </section>
 
       {/* Coming Next — Forest Glow Herbal Tea */}
-      <section className="tea-section">
+      <section id="tea-waitlist" className="tea-section">
         <div className="tea-bg-motif">
           <Leaf size={320} />
         </div>
