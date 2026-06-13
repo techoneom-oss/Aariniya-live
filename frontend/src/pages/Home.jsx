@@ -157,6 +157,22 @@ export default function Home({ setActivePage }) {
         </div>
       </section>
 
+      {/* Wellness Quiz CTA Banner */}
+      <section style={styles.quizCtaSection}>
+        <div className="container" style={styles.quizCtaContainer}>
+          <h2 style={styles.quizCtaTitle}>What's your forest wellness type?</h2>
+          <p style={styles.quizCtaText}>
+            Take Aarini's 2-minute quiz — get your personalised wellness ritual
+          </p>
+          <button 
+            className="btn btn-accent" 
+            onClick={() => handleNav('quiz')}
+          >
+            Take the Quiz →
+          </button>
+        </div>
+      </section>
+
       {/* Coming Next — Forest Glow Herbal Tea */}
       <section id="tea-waitlist" className="tea-section">
         <div className="tea-bg-motif">
@@ -404,5 +420,34 @@ const styles = {
     letterSpacing: '0.15em',
     textTransform: 'uppercase',
     color: 'var(--color-accent)',
+  },
+  quizCtaSection: {
+    padding: '5rem 0',
+    backgroundColor: '#1a3c34',
+    color: '#ffffff',
+    textAlign: 'center',
+    borderBottom: '1px solid rgba(251, 249, 244, 0.05)',
+  },
+  quizCtaContainer: {
+    maxWidth: '750px',
+    margin: '0 auto',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: '1.25rem',
+  },
+  quizCtaTitle: {
+    fontFamily: 'var(--font-serif)',
+    fontSize: '2.5rem',
+    color: '#ffffff',
+    margin: 0,
+    fontWeight: '600',
+  },
+  quizCtaText: {
+    fontFamily: 'var(--font-sans)',
+    fontSize: '1.1rem',
+    color: '#edf2f0',
+    margin: '0 0 0.5rem 0',
+    fontWeight: '300',
   }
 };

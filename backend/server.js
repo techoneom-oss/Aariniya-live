@@ -349,6 +349,29 @@ app.post('/api/reviews', (req, res) => {
   });
 });
 
+// Post quiz email lead
+app.post('/api/quiz-email', (req, res) => {
+  const { email, resultType } = req.body;
+  if (!email || !resultType) {
+    return res.status(400).json({ error: 'Email and resultType are required' });
+  }
+
+  const query = `
+    INSERT INTO quiz_leads (email, result_type)
+    VALUES (?, ?)
+  `;
+
+  db.run(query, [email, resultType], function(err) {
+    if (err) return res.status(500).json({ error: err.message });
+    res.status(201).json({
+      id: this.lastID,
+      email,
+      resultType,
+      created_at: new Date().toISOString()
+    });
+  });
+});
+
 // --- COURSES ROUTES ---
 app.get('/api/courses', (req, res) => {
   db.all('SELECT * FROM courses', [], (err, rows) => {

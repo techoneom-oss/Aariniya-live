@@ -149,6 +149,15 @@ function initializeDatabase() {
         payment_status TEXT DEFAULT 'pending', -- 'pending', 'paid', 'failed'
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY(user_id) REFERENCES users(id)
+    `);
+
+    // 6. Quiz Leads Table
+    db.run(`
+      CREATE TABLE IF NOT EXISTS quiz_leads (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        email TEXT NOT NULL,
+        result_type TEXT NOT NULL,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
       )
     `);
   });

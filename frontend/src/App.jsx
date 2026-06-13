@@ -11,6 +11,7 @@ import Auth from './pages/Auth';
 import Profile from './pages/Profile';
 import AdminDashboard from './pages/AdminDashboard';
 import Policies from './pages/Policies';
+import WellnessQuiz from './pages/WellnessQuiz';
 
 export default function App() {
   const [activePage, setActivePage] = useState('home');
@@ -105,6 +106,10 @@ export default function App() {
       case 'courses':
         title = "Wellness Courses | AARINIYA — Forest Yoga & Ayurvedic Nutrition";
         description = "Aarini's guided wellness programs — launching soon. Join the waitlist to be first to know.";
+        break;
+      case 'quiz':
+        title = "Forest Wellness Quiz | Find Your Type | AARINIYA";
+        description = "Take Aarini's 2-minute forest wellness quiz. Discover if you're a Golden Bloom, Deep Root, Forest Warrior, or Calm River — and get your personalised daily ritual.";
         break;
       case 'policies':
         title = "Shipping, Returns & Policies | AARINIYA";
@@ -219,6 +224,8 @@ export default function App() {
         return <MyJourney />;
       case 'courses':
         return <Courses onEnrollCourse={handleAddToCart} setActivePage={setActivePage} />;
+      case 'quiz':
+        return <WellnessQuiz setActivePage={setActivePage} />;
       case 'policies':
         return <Policies section={policiesSection} />;
       case 'auth':

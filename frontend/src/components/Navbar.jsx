@@ -45,6 +45,12 @@ export default function Navbar({ activePage, setActivePage, cartCount, user, onC
             Our Journey
           </span>
           <span 
+            style={{...styles.link, ...(activePage === 'quiz' ? styles.activeLink : {})}} 
+            onClick={() => handleNav('quiz')}
+          >
+            Wellness Quiz
+          </span>
+          <span 
             style={{...styles.link, ...(activePage === 'courses' ? styles.activeLink : {})}} 
             onClick={() => handleNav('courses')}
           >
